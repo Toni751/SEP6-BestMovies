@@ -32,10 +32,14 @@ export async function handler(event, context) {
   const db = await connectToDatabase();
 
   // Make a MongoDB MQL Query
-  const notes = await db.collection("movies").find().toArray();
+  const movies = await db.collection("movies").find().toArray();
 
   return {
     statusCode: 200,
-    body: JSON.stringify(notes),
+    body: JSON.stringify(movies),
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Credentials": true,
+    },
   };
 }

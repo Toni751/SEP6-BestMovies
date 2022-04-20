@@ -1,4 +1,5 @@
 import * as sst from "@serverless-stack/resources";
+import { HttpMethod } from "aws-cdk-lib/aws-events";
 
 export default class MyStack extends sst.Stack {
   constructor(scope, id, props) {
@@ -6,6 +7,9 @@ export default class MyStack extends sst.Stack {
 
     // Create a HTTP API
     const api = new sst.Api(this, "Api", {
+      cors: {
+        allowMethods: [HttpMethod.GET],
+      },
       defaultFunctionProps: {
         environment: {
           MONGODB_URL: process.env.MONGODB_URL,
