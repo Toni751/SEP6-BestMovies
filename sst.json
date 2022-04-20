@@ -1,0 +1,5 @@
+{
+  "name": "sep6-bestmovies",
+  "region": "eu-west-1",
+  "main": "stacks/index.js"
+}
