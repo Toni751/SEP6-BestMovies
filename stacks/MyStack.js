@@ -10,11 +10,11 @@ export default class MyStack extends sst.Stack {
       cors: {
         allowMethods: [HttpMethod.GET],
       },
-      defaultFunctionProps: {
-        environment: {
-          MONGODB_URL: process.env.MONGODB_URL,
-        },
-      },
+      // defaultFunctionProps: {
+      //   environment: {
+      //     MONGODB_URL: props,
+      //   },
+      // },
       routes: {
         "GET /": "src/lambda.handler",
       },

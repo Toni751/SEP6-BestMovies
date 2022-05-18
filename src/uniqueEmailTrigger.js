@@ -9,7 +9,7 @@ export async function main(event, context, callback) {
     const userParams = {
       UserPoolId: event.userPoolId,
       AttributesToGet: ["email"],
-      Filter: `email = "${email}"`,
+      Filter: `email = ${email}`,
       Limit: 1,
     };
     try {

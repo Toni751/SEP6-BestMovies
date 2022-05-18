@@ -40,6 +40,6 @@
     ]
   },
   "devDependencies": {
-    "@serverless-stack/static-site-env": "^1.0.4"
+    "@serverless-stack/static-site-env": "^1.1.1"
   }
 }

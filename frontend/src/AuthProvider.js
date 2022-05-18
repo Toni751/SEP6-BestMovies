@@ -47,11 +47,9 @@ const AuthProvider = ({ children }) => {
     callback
   ) => {
     try {
-      console.log("Starting sign up confirmation");
-      await Auth.confirmSignUp(username, confirmationCode, {
-        forceAliasCreation: false,
-      });
-      console.log("Started sign in after sign up confirmation");
+      // console.log("Starting sign up confirmation");
+      await Auth.confirmSignUp(username, confirmationCode);
+      // console.log("Started sign in after sign up confirmation");
       await Auth.signIn(username, password);
       callback(true);
     } catch (e) {

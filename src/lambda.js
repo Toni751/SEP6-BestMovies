@@ -1,24 +1,25 @@
-import * as mongodb from "mongodb";
+// import * as mongodb from "mongodb";
+import { getDbConnection } from "./utility";
 
-const MongoClient = mongodb.MongoClient;
+// const MongoClient = mongodb.MongoClient;
 
 // Once we connect to the database once, we'll store that connection
 // and reuse it so that we don't have to connect to the database on every request.
-let cachedDb = null;
+// let cachedDb = null;
 
-async function connectToDatabase() {
-  if (cachedDb) {
-    return cachedDb;
-  }
+// async function connectToDatabase() {
+//   if (cachedDb) {
+//     return cachedDb;
+//   }
 
-  // Connect to our MongoDB database hosted on MongoDB Atlas
-  const client = await MongoClient.connect(process.env.MONGODB_URL);
+//   // Connect to our MongoDB database hosted on MongoDB Atlas
+//   const client = await MongoClient.connect(process.env.MONGODB_URL);
 
-  // Specify which database we want to use
-  cachedDb = await client.db("bestmoviesdb");
+//   // Specify which database we want to use
+//   cachedDb = await client.db("bestmoviesdb");
 
-  return cachedDb;
-}
+//   return cachedDb;
+// }
 
 export async function handler(event, context) {
   // By default, the callback waits until the runtime event loop is empty
@@ -29,10 +30,10 @@ export async function handler(event, context) {
   context.callbackWaitsForEmptyEventLoop = false;
 
   // Get an instance of our database
-  const db = await connectToDatabase();
+  const db = await getDbConnection();
 
   // Make a MongoDB MQL Query
-  const movies = await db.collection("movies").find().toArray();
+  const movies = await db.collection("movies").find({}).limit(2).toArray();
 
   return {
     statusCode: 200,

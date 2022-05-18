@@ -10,6 +10,8 @@ export default class AuthStack extends sst.Stack {
 
     const { api } = props;
 
+    // The framework creates automatically 1 user pool for development and another separate user pool for production
+    // Therefore development and production users are never mixed
     // Create a Cognito User Pool and Identity Pool
     this.auth = new sst.Auth(this, "Auth", {
       cognito: {
