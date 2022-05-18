@@ -12,7 +12,7 @@ export default class FrontendStack extends sst.Stack {
       // Pass in our environment variables
       environment: {
         REACT_APP_HELLO: "Env var from serverless",
-        // REACT_APP_API_URL: api.url,
+        REACT_APP_API_URL: api.url,
         REACT_APP_REGION: scope.region,
         // REACT_APP_BUCKET: bucket.bucketName,
         REACT_APP_USER_POOL_ID: auth.cognitoUserPool.userPoolId,

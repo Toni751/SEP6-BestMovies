@@ -6,7 +6,6 @@ import config from "./config";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 
-console.log("configure cognito", config.cognito);
 Amplify.configure({
   Auth: {
     mandatorySignIn: true,

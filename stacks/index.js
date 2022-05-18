@@ -27,6 +27,5 @@ export default async function main(app) {
   new FrontendStack(app, "frontend", {
     api: apiStack.api,
     auth: authStack.auth,
-    // bucket: storageStack.bucket,
   });
 }

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { AuthContext } from "../AuthProvider";
+import { AuthContext } from "../auth/AuthProvider";
 import { useNavigate } from "react-router";
 import "../styles/Login.css";
 import popcorn from "../images/popcorn.png";

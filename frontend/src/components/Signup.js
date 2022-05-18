@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { AuthContext } from "../AuthProvider";
+import { AuthContext } from "../auth/AuthProvider";
 import "../styles/Signup.css";
 import popcorn from "../images/popcorn.png";
 import { Navigate } from "react-router-dom";

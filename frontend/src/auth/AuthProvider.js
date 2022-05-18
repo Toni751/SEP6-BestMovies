@@ -4,13 +4,22 @@ import { Auth } from "aws-amplify";
 let AuthContext = React.createContext({});
 
 const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState(null);
 
   const login = async (userid, password, callback) => {
     try {
       const user = await Auth.signIn(userid, password);
       console.log("Auth response", user);
-      setIsAuthenticated(true);
+      const userData = user.signInUserSession.idToken.payload;
+      console.log("ID Token", userData);
+      const newUser = {
+        username: userData["cognito:username"],
+        email: userData.email,
+        iat: userData.iat,
+        exp: userData.exp,
+      };
+      console.log("New user", newUser);
+      setUser(newUser);
       console.log("Logged in successfully");
       callback(true);
     } catch (e) {
@@ -21,7 +30,8 @@ const AuthProvider = ({ children }) => {
 
   const signOut = (callback) => {
     console.log("Signing out user");
-    setIsAuthenticated(false);
+    setUser(null);
+    callback();
   };
 
   const signUp = async (username, email, password, callback) => {
@@ -32,7 +42,6 @@ const AuthProvider = ({ children }) => {
         attributes: { email: email },
       });
       console.log("Sign up", newUser);
-      setIsAuthenticated(true);
       callback(true);
     } catch (e) {
       console.log(e);
@@ -59,7 +68,7 @@ const AuthProvider = ({ children }) => {
   };
 
   const value = {
-    isAuthenticated,
+    user,
     login,
     signOut,
     signUp,
