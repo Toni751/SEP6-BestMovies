@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Auth } from "aws-amplify";
 
 let AuthContext = React.createContext({});
@@ -6,7 +6,7 @@ let AuthContext = React.createContext({});
 const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const signIn = async (userid, password, callback) => {
+  const login = async (userid, password, callback) => {
     try {
       const user = await Auth.signIn(userid, password);
       console.log("Auth response", user);
@@ -47,11 +47,11 @@ const AuthProvider = ({ children }) => {
     callback
   ) => {
     try {
-      // console.log("Starting sign up confirmation");
+      console.log("Starting sign up confirmation");
       await Auth.confirmSignUp(username, confirmationCode, {
         forceAliasCreation: false,
       });
-      // console.log("Started sign in after sign up confirmation");
+      console.log("Started sign in after sign up confirmation");
       await Auth.signIn(username, password);
       callback(true);
     } catch (e) {
@@ -62,7 +62,7 @@ const AuthProvider = ({ children }) => {
 
   const value = {
     isAuthenticated,
-    signIn,
+    login,
     signOut,
     signUp,
     handleConfirmation,

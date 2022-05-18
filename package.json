@@ -18,8 +18,7 @@
     "@serverless-stack/cli": "0.69.6",
     "@serverless-stack/resources": "0.69.6",
     "aws-cdk-lib": "2.15.0",
-    "mongodb": "^4.5.0",
-    "react-router-dom": "^6.3.0"
+    "mongodb": "^4.5.0"
   },
   "devDependencies": {
     "@serverless-stack/static-site-env": "^0.69.6"

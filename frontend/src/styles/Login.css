@@ -1,0 +1,16 @@
+input {
+  width: 300px;
+  border-radius: 25px;
+  height: 20px;
+  border: white;
+  padding: 7px;
+}
+label {
+  font-size: 15px;
+  margin: 0px 0px 5px 10px;
+}
+.signup_button {
+  border: #e8931c;
+  font-size: 15px;
+  margin-top: 10px;
+}
