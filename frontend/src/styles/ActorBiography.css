@@ -1,0 +1,21 @@
+.full_modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 100%;
+  overflow: auto;
+}
+.modal_div {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: #242424;
+  padding: 0px 25px 25px 25px;
+  border-radius: 25px;
+  width: 85%;
+  border: 2px solid #808080;
+}

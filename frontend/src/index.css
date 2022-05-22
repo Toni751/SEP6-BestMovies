@@ -2,10 +2,29 @@
   font-family: "Inter-Light";
   src: url("./utils/fonts/Inter-Light.ttf");
 }
+@font-face {
+  font-family: "Inter-Bold";
+  src: url("./utils/fonts/Inter-Bold.ttf");
+}
+@font-face {
+  font-family: "Inter-Medium";
+  src: url("./utils/fonts/Inter-Medium.ttf");
+}
+
+.inter_bold {
+  font-family: Inter-Bold;
+}
+
+.inter_medium {
+  font-family: Inter-Medium;
+}
+.inter_light {
+  font-family: Inter-Light;
+}
 
 body {
   height: 100vh;
-  width: 100vw;
+  max-width: 100%;
   margin: 0;
   font-family: Inter-Light;
   -webkit-font-smoothing: antialiased;

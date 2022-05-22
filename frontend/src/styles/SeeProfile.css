@@ -1,0 +1,35 @@
+.seeprofile_div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 5vh;
+}
+
+.separated_div {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+.individual_div {
+  display: flex;
+  flex-direction: column;
+  padding: 100px 200px 200px 200px;
+  width: 100%;
+  font-size: 20px;
+}
+#right_border {
+  border-right: 1px solid #4c4c4c;
+}
+
+#seeprofile_username {
+  margin-bottom: 50px;
+}
+
+#delete_account:hover {
+  color: #e8931c;
+}
+
+#delete_account {
+  text-decoration: underline;
+}

@@ -1,0 +1,16 @@
+.discover_div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.discover_dropdown {
+  width: 130px;
+  margin-bottom: 40px;
+}
+
+.div_dropdown {
+  display: flex;
+  justify-content: flex-start;
+  width: 95%;
+}

@@ -1,0 +1,39 @@
+.actorpage_div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0px 30px 0px 30px;
+}
+.actor_details_div {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding-bottom: 50px;
+  border-bottom: 0.5px solid #4c4c4c;
+}
+.actor_image {
+  border-radius: 4px;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+.actor_image_div {
+  display: flex;
+  justify-content: center;
+  background-color: #1d1d1d;
+  width: 300px;
+  height: 320px;
+}
+.actor_description_div {
+  padding-left: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-height: 320px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.biography {
+  max-width: 155ch;
+}

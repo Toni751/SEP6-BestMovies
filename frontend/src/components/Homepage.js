@@ -11,8 +11,8 @@ const Homepage = () => {
 
   return (
     <div className="home_div">
-      <p className="header neg_margin_text">Are you a movieholic?</p>
-      <p className="subheader">Then come join our community!</p>
+      <p className="header neg_margin_text inter_bold">Are you a movieholic?</p>
+      <p className="subheader inter_medium">Then come join our community!</p>
       <button className="home_button" onClick={() => goToDiscover()}>
         Discover movies
       </button>

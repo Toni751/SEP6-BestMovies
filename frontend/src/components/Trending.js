@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import movieservice from "../services/movieservice";
-import "../styles/Discover.css";
 import MovieCard from "./MovieCard";
+import "../styles/Discover.css";
+import "../styles/Trending.css";
+import fire from "../images/fire.png";
 import MovieListPagination from "./MovieListPagination";
 
-const Discover = () => {
+const Trending = () => {
   const [movies, setMovies] = useState([]);
+  const [moviesToDisplay, setMoviesToDisplay] = useState([]);
   const [page, setPage] = useState(1);
 
   useEffect(() => {
@@ -24,15 +27,9 @@ const Discover = () => {
 
   return (
     <div className="discover_div">
-      <p className="subheader inter_bold">Discover the newest movies</p>
-      <div className="div_dropdown">
-        <select className="dropdown_list discover_dropdown">
-          <option value="1">Newest-Oldest</option>
-          <option value="1">Oldest-Newest</option>
-          <option value="1">Newest-Oldest</option>
-          <option value="1">Newest-Oldest</option>
-          <option value="1">Newest-Oldest</option>
-        </select>
+      <div className="trending_div">
+        <p className="subheader inter_bold">What's trending?</p>
+        <img src={fire} alt="fire icon" width="30px" height="30px"></img>
       </div>
       {movies.map((movie) => (
         <MovieCard key={movie._id} movie={movie} />
@@ -46,4 +43,4 @@ const Discover = () => {
   );
 };
 
-export default Discover;
+export default Trending;
