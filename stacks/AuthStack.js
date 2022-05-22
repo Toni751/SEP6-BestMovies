@@ -8,8 +8,6 @@ export default class AuthStack extends sst.Stack {
   constructor(scope, id, props) {
     super(scope, id, props);
 
-    const { api } = props;
-
     // The framework creates automatically 1 user pool for development and another separate user pool for production
     // Therefore development and production users are never mixed
     // Create a Cognito User Pool and Identity Pool
@@ -26,7 +24,7 @@ export default class AuthStack extends sst.Stack {
     });
 
     // this.auth.attachPermissionsForAuthUsers([
-    //   // Allow access to the API
+    //    Allow access to the API
     //   api,
     //   // Policy granting access to a specific folder in the bucket
     //   new iam.PolicyStatement({

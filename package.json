@@ -15,12 +15,10 @@
     ]
   },
   "dependencies": {
-    "@serverless-stack/cli": "0.69.6",
-    "@serverless-stack/resources": "0.69.6",
-    "aws-cdk-lib": "2.15.0",
+    "@serverless-stack/cli": "^1.1.2",
+    "@serverless-stack/resources": "^1.1.2",
+    "@serverless-stack/static-site-env": "^1.1.2",
+    "aws-cdk-lib": "2.24.0",
     "mongodb": "^4.5.0"
-  },
-  "devDependencies": {
-    "@serverless-stack/static-site-env": "^0.69.6"
   }
 }
