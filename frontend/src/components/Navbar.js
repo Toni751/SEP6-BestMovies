@@ -10,8 +10,7 @@ const Navbar = () => {
   const auth = useContext(AuthContext);
 
   const handleLogoClick = () => {
-    console.log(auth.user);
-    navigate("/");
+    navigate(auth.user ? "/discover" : "/");
   };
 
   const goToSignUp = () => {

@@ -23,6 +23,7 @@ const AuthProvider = ({ children }) => {
   const signOut = () => {
     console.log("Signing out user");
     sessionStorage.removeItem("id-token");
+    sessionStorage.removeItem("bestmovies-token");
     setUser(null);
   };
 
@@ -70,12 +71,14 @@ const AuthProvider = ({ children }) => {
         username: userData["cognito:username"],
         email: userData.email,
         verified: userData.email_verified,
-        iat: userData.iat,
-        exp: userData.exp,
       };
       console.log("New user", newUser);
       setUser(newUser);
       sessionStorage.setItem("id-token", JSON.stringify(newUser));
+      sessionStorage.setItem(
+        "bestmovies-token",
+        user.signInUserSession.accessToken.jwtToken
+      );
       console.log("Logged in successfully");
       return "true";
     } catch (e) {

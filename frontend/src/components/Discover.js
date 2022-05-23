@@ -9,13 +9,13 @@ const Discover = () => {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    movieservice
-      .getMovies()
-      .then((data) => {
-        console.log(data);
-        setMovies(data.data);
-      })
-      .catch((err) => console.log(err));
+    // movieservice
+    //   .getMovies()
+    //   .then((data) => {
+    //     console.log(data);
+    //     setMovies(data.data);
+    //   })
+    //   .catch((err) => console.log(err));
   }, []);
 
   const handleCallback = (current_page_index) => {
