@@ -3,23 +3,10 @@ import white_like from "../images/white_like.png";
 import yellow_like from "../images/yellow_like.png";
 import white_star from "../images/white_star.png";
 import yellow_star from "../images/yellow_star.png";
+import default_movie_logo from "../images/default-movie-logo.png";
 import "../styles/MovieCard.css";
 
 const MovieCard = ({ movie }) => {
-  const name = "James Bond - Skyfall";
-  const rating = "4.5";
-  const likes = "255";
-  const genre = "Horror";
-  const director = "Sam Mendes";
-  const actors = [
-    "Daniel Craig",
-    "Judi Dench",
-    "Javier Bardem",
-    "Ralph Fiennes",
-    "Naomi Harris",
-  ];
-  const comments = "5";
-
   const giveLike = () => {
     console.log("Like given");
   };
@@ -32,11 +19,27 @@ const MovieCard = ({ movie }) => {
     console.log("Going to movie details");
   };
 
+  const getImageSrc = (path) => {
+    if (path === null || path === undefined || path.length === 0) {
+      return default_movie_logo;
+    }
+    return `https://image.tmdb.org/t/p/w200${path}`;
+  };
+
+  const convertPersonArrayToText = (people) => {
+    if (people === null || people === undefined || people.length === 0) {
+      return "Unknwon";
+    }
+    let text = "";
+    people.forEach((person) => (text += `${person.name}, `));
+    return text.slice(0, -2);
+  };
+
   return (
     <div className="moviecards_div">
       <div className="movie_image_div">
         <img
-          src="https://image.tmdb.org/t/p/w200/cqnVuxXe6vA7wfNWubak3x36DKJ.jpg"
+          src={getImageSrc(movie.backdrop_path)}
           alt="Movie Background"
           className="movie_image"
         ></img>
@@ -50,9 +53,9 @@ const MovieCard = ({ movie }) => {
             {movie.title}
           </p>
           <div className="left_group_div">
-            <p>{likes}</p>
+            <p>{movie.numberOfLikes}</p>
             <img
-              src={white_like}
+              src={movie.isLikedByUser ? yellow_like : white_like}
               alt="Like"
               width="18px"
               height="18px"
@@ -61,7 +64,7 @@ const MovieCard = ({ movie }) => {
               onClick={() => giveLike()}
             ></img>
             <img
-              src={white_star}
+              src={movie.isTopListed ? yellow_star : white_star}
               alt="Favourite"
               width="18px"
               height="18px"
@@ -72,47 +75,30 @@ const MovieCard = ({ movie }) => {
         </div>
         <p className="row_div">
           <span className="inter_medium">Rating: </span>
-          {rating}
+          {movie.vote_average}
         </p>
         <p className="row_div">
           <span className="inter_medium">Genres: </span>
-          {movie.genres.join(", ")}
+          {movie.genres.toString()}
         </p>
 
-        {movie.directors.join(", ") ? (
-          <div>
-            <p className="row_div">
-              <span className="inter_medium">Director: </span>
-              {movie.directors.join(", ")}
-            </p>
-          </div>
-        ) : (
-          <div>
-            <p className="row_div">
-              <span className="inter_medium">Director: </span>
-              Unknown director
-            </p>
-          </div>
-        )}
+        <div>
+          <p className="row_div">
+            <span className="inter_medium">Director: </span>
+            {convertPersonArrayToText(movie.joinedDirectors)}
+          </p>
+        </div>
 
         <div className="footer_row_div">
-          {actors.join(", ") ? (
-            <div>
-              <p>
-                <span className="inter_medium">Actors: </span>{" "}
-                {actors.join(", ")} and <span> others...</span>
-              </p>
-            </div>
-          ) : (
-            <div>
-              <p>
-                <span className="inter_medium">Actors: </span> Unknown actors
-              </p>
-            </div>
-          )}
+          <div>
+            <p>
+              <span className="inter_medium">Actors: </span>
+              {convertPersonArrayToText(movie.joinedActors)}
+            </p>
+          </div>
 
           <p className="links" onClick={() => goToMovieDetails()}>
-            {comments} comments...
+            {movie.numberOfComments} comments...
           </p>
         </div>
       </div>

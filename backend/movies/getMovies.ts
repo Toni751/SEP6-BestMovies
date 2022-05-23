@@ -7,21 +7,26 @@ export async function main(event) {
   const page = +event.queryStringParameters.page;
   const filter = event.queryStringParameters.filter;
   const genresRaw = event.queryStringParameters.genres;
+
   const genres = genresRaw.split(",");
-  console.log("Genres", genres);
+  console.log("Genres", genres, genresRaw, page, filter, userId);
   const filterObject =
     filter === "oldest" ? { release_date: 1 } : { release_date: -1 };
 
   const currentYear = `${new Date().getFullYear()}-12-31`;
-  console.log("Current Year", currentYear);
+  const isGenresEmpty = genresRaw || genresRaw.length === 0;
+  const genresMatchObject = isGenresEmpty
+    ? { release_date: { $lte: currentYear } }
+    : {
+        genres: { $elemMatch: { $in: genres } },
+        release_date: { $lte: currentYear },
+      };
+
   const movies = await db
     .collection("movies")
     .aggregate([
       {
-        $match: {
-          genres: { $elemMatch: { $in: genres } },
-          release_date: { $lte: currentYear },
-        },
+        $match: genresMatchObject,
       },
       { $sort: filterObject },
       { $skip: (page - 1) * 10 },
@@ -61,9 +66,10 @@ export async function main(event) {
     ])
     .toArray();
 
-  const userTopList = await db
-    .collection("toplists")
-    .findOne({ user_id: userId });
+  let userTopList = null;
+  if (userId) {
+    userTopList = await db.collection("toplists").findOne({ user_id: userId });
+  }
 
   movies.forEach((movie) => {
     if (userTopList && userTopList.movie_ids) {

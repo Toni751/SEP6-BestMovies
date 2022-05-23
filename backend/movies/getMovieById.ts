@@ -22,10 +22,14 @@ export async function main(event) {
     movie.isLikedByUser = false;
   }
 
-  movie.isTopListed =
-    (await db
-      .collection("toplists")
-      .findOne({ user_id: userId, movie_ids: movie._id })) !== null;
+  if (userId) {
+    movie.isTopListed =
+      (await db
+        .collection("toplists")
+        .findOne({ user_id: userId, movie_ids: movie._id })) !== null;
+  } else {
+    movie.isTopListed = false;
+  }
 
   const personIds = [];
   personIds.push(...movie.directors);
