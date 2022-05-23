@@ -1,9 +1,8 @@
 import { getDbConnection } from "../utility/utilitySSM";
 
 export async function main(event) {
-  // console.log("Event", event.queryStringParameters, event.pathParameters);
   const db = await getDbConnection();
-  // Make a MongoDB MQL Query
+
   const movie = await db
     .collection("movies")
     .findOne({ _id: +event.pathParameters.movie_id });
