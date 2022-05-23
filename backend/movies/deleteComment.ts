@@ -1,9 +1,22 @@
-export async function main() {
-  const rand = Math.floor(Math.random() * 10);
+import { getDbConnection } from "../utility/utilitySSM";
+
+export async function main(event) {
+  const db = await getDbConnection();
+
+  const commentId = event.pathParameters.comment_id;
+
+  const deleteComment = await db.collection("movies").updateMany(
+    {},
+    {
+      $pull: {
+        comments: { _id: commentId },
+      },
+    }
+  );
 
   return {
     statusCode: 200,
-    headers: { "Content-Type": "text/json" },
-    body: JSON.stringify({ message: `Private Random Number: ${rand}` }),
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(deleteComment),
   };
 }

@@ -75,8 +75,8 @@ const MovieCard = ({ movie }) => {
           {rating}
         </p>
         <p className="row_div">
-          <span className="inter_medium">Genre: </span>
-          {genre}
+          <span className="inter_medium">Genres: </span>
+          {movie.genres.join(", ")}
         </p>
 
         {movie.directors.join(", ") ? (
