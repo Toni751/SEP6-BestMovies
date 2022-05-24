@@ -100,6 +100,10 @@ button:hover {
   animation-iteration-count: infinite;
 }
 
+.person_name:hover {
+  text-decoration: underline;
+}
+
 @keyframes shake {
   0% {
     transform: translate(2px, 1px) rotate(0deg);

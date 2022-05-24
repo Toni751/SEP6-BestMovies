@@ -51,20 +51,16 @@ const MovieCard = ({ movie, handleLike, handleStar }) => {
     navigate(`/movie/${movie._id}`);
   };
 
+  const handleNavigateToPerson = (personId) => {
+    console.log("Going to person details", personId);
+    navigate(`/person/${personId}`);
+  };
+
   const getImageSrc = (path) => {
     if (path === null || path === undefined || path.length === 0) {
       return default_movie_logo;
     }
     return `https://image.tmdb.org/t/p/w200${path}`;
-  };
-
-  const convertPersonArrayToText = (people) => {
-    if (people === null || people === undefined || people.length === 0) {
-      return "Unknwon";
-    }
-    let text = "";
-    people.slice(0, 4).forEach((person) => (text += `${person.name}, `));
-    return text.slice(0, -2);
   };
 
   return (
@@ -116,8 +112,21 @@ const MovieCard = ({ movie, handleLike, handleStar }) => {
 
         <div>
           <p className="row_div">
-            <span className="inter_medium">Director: </span>
-            {convertPersonArrayToText(movie.joinedDirectors)}
+            <span className="inter_medium">Director(s): </span>
+            {movie.joinedDirectors &&
+              movie.joinedDirectors.map((director, index) => {
+                return (
+                  <span
+                    key={director._id}
+                    className="person_name"
+                    onClick={() => handleNavigateToPerson(director._id)}
+                  >
+                    {director.name}
+                    {index !== movie.joinedDirectors.length - 1 && ", "}
+                  </span>
+                );
+              })}
+            {movie.joinedDirectors.length === 0 && <span>Unknown</span>}
           </p>
         </div>
 
@@ -125,7 +134,19 @@ const MovieCard = ({ movie, handleLike, handleStar }) => {
           <div>
             <p>
               <span className="inter_medium">Actors: </span>
-              {convertPersonArrayToText(movie.joinedActors)}
+              {movie.joinedActors &&
+                movie.joinedActors.slice(0, 4).map((actor, index) => {
+                  return (
+                    <span
+                      key={actor._id}
+                      className="person_name"
+                      onClick={() => handleNavigateToPerson(actor._id)}
+                    >
+                      {actor.name}
+                      {index !== 3 && ", "}
+                    </span>
+                  );
+                })}
               {movie.joinedActors && (
                 <span className="links" onClick={goToMovieDetails}>
                   {" "}

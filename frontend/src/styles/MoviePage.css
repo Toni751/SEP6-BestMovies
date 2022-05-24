@@ -1,0 +1,40 @@
+.moviepage_div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0px 30px 0px 30px;
+}
+
+.movie_details_div {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding-bottom: 50px;
+  border-bottom: 0.5px solid #4c4c4c;
+}
+
+.movie_details_image {
+  border-radius: 4px;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.movie_details_image_div {
+  display: flex;
+  justify-content: center;
+  background-color: #1d1d1d;
+  width: 300px;
+  height: 320px;
+}
+
+.movie_details_description_div {
+  padding-left: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-height: 320px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
