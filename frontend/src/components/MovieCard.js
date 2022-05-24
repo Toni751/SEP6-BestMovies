@@ -1,22 +1,54 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import white_like from "../images/white_like.png";
 import yellow_like from "../images/yellow_like.png";
 import white_star from "../images/white_star.png";
 import yellow_star from "../images/yellow_star.png";
 import default_movie_logo from "../images/default-movie-logo.png";
 import "../styles/MovieCard.css";
+import { AuthContext } from "../auth/AuthProvider";
+import { useNavigate } from "react-router-dom";
+import movieservice from "../services/movieservice";
+import userservice from "../services/userservice";
 
-const MovieCard = ({ movie }) => {
+const MovieCard = ({ movie, handleLike, handleStar }) => {
+  const navigate = useNavigate();
+  const auth = useContext(AuthContext);
+
   const giveLike = () => {
-    console.log("Like given");
+    if (auth.user && auth.user.username) {
+      movieservice
+        .addMovieLike({
+          isLike: !movie.isLikedByUser,
+          userId: auth.user.username,
+          movieId: movie._id,
+        })
+        .then((response) => {
+          console.log("Like added successfully", response);
+          handleLike(movie._id);
+        })
+        .catch((err) => console.log("Error adding like", err));
+    }
   };
 
   const addToFavourites = () => {
-    console.log("Added to favourites");
+    if (auth.user && auth.user.username) {
+      userservice
+        .addUserToplist({
+          isAdd: !movie.isTopListed,
+          userId: auth.user.username,
+          movieId: movie._id,
+        })
+        .then((response) => {
+          console.log("Movie to toplist added successfully", response);
+          handleStar(movie._id);
+        })
+        .catch((err) => console.log("Error adding movie to toplist", err));
+    }
   };
 
   const goToMovieDetails = () => {
     console.log("Going to movie details");
+    navigate(`/movie/${movie._id}`);
   };
 
   const getImageSrc = (path) => {
@@ -31,7 +63,7 @@ const MovieCard = ({ movie }) => {
       return "Unknwon";
     }
     let text = "";
-    people.forEach((person) => (text += `${person.name}, `));
+    people.slice(0, 4).forEach((person) => (text += `${person.name}, `));
     return text.slice(0, -2);
   };
 
@@ -94,6 +126,12 @@ const MovieCard = ({ movie }) => {
             <p>
               <span className="inter_medium">Actors: </span>
               {convertPersonArrayToText(movie.joinedActors)}
+              {movie.joinedActors && (
+                <span className="links" onClick={goToMovieDetails}>
+                  {" "}
+                  and others ...
+                </span>
+              )}
             </p>
           </div>
 

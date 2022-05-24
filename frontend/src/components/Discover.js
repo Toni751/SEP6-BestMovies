@@ -42,6 +42,31 @@ const Discover = () => {
     setFilter(newValue);
   };
 
+  const handleLike = (movieId) => {
+    const temp = [...movies];
+    temp.forEach((movie) => {
+      if (movie._id === movieId) {
+        if (movie.isLikedByUser) {
+          movie.numberOfLikes -= 1;
+        } else {
+          movie.numberOfLikes += 1;
+        }
+        movie.isLikedByUser = !movie.isLikedByUser;
+      }
+    });
+    setMovies(temp);
+  };
+
+  const handleStar = (movieId) => {
+    const temp = [...movies];
+    temp.forEach((movie) => {
+      if (movie._id === movieId) {
+        movie.isTopListed = !movie.isTopListed;
+      }
+    });
+    setMovies(temp);
+  };
+
   return (
     <div className="discover_div">
       <p className="subheader inter_bold">Discover the newest movies</p>
@@ -56,7 +81,12 @@ const Discover = () => {
         </select>
       </div>
       {movies.map((movie) => (
-        <MovieCard key={movie._id} movie={movie} />
+        <MovieCard
+          key={movie._id}
+          movie={movie}
+          handleLike={(movieId) => handleLike(movieId)}
+          handleStar={(movieId) => handleStar(movieId)}
+        />
       ))}
       <MovieListPagination parentCallback={(p) => handleCallback(p)} />
       <p>

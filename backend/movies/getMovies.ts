@@ -8,13 +8,17 @@ export async function main(event) {
   const filter = event.queryStringParameters.filter;
   const genresRaw = event.queryStringParameters.genres;
 
-  const genres = genresRaw.split(",");
-  console.log("Genres", genres, genresRaw, page, filter, userId);
+  // console.log("Genres", genresRaw, page, filter, userId);
   const filterObject =
     filter === "oldest" ? { release_date: 1 } : { release_date: -1 };
 
   const currentYear = `${new Date().getFullYear()}-12-31`;
-  const isGenresEmpty = genresRaw || genresRaw.length === 0;
+
+  const isGenresEmpty = genresRaw ? genresRaw.length === 0 : true;
+  let genres = [];
+  if (!isGenresEmpty) {
+    genres = genresRaw.split(",");
+  }
   const genresMatchObject = isGenresEmpty
     ? { release_date: { $lte: currentYear } }
     : {

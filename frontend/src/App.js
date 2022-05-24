@@ -26,8 +26,8 @@ function App() {
         <Route path="login" element={<Login />}></Route>
         <Route path="signup" element={<Signup />}></Route>
         <Route path="discover" element={<Discover />}></Route>
-        <Route path="moviepage" element={<MoviePage />}></Route>
-        <Route path="actorpage" element={<ActorPage />}></Route>
+        <Route path="movie/:movieId" element={<MoviePage />}></Route>
+        <Route path="person/:personId" element={<ActorPage />}></Route>
         <Route
           path="seeprofile"
           element={
