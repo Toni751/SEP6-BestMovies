@@ -14,16 +14,17 @@ export async function main(event) {
       },
       {
         $lookup: {
-          from: "movie",
+          from: "movies",
           localField: "movie_ids",
           foreignField: "_id",
-          as: "movies",
+          as: "movie",
         },
       },
+      { $unwind: "$movie" },
       {
         $lookup: {
           from: "people",
-          localField: "movies.actors",
+          localField: "movie.actors",
           foreignField: "_id",
           as: "joinedActors",
         },
@@ -31,13 +32,14 @@ export async function main(event) {
       {
         $lookup: {
           from: "people",
-          localField: "movies.directors",
+          localField: "movie.directors",
           foreignField: "_id",
           as: "joinedDirectors",
         },
       },
       {
         $project: {
+          _id: 0,
           "movie.title": 1,
           "movie.vote_average": 1,
           "movie.genres": 1,
@@ -48,8 +50,10 @@ export async function main(event) {
           "movie.backdrop_path": 1,
           "movie.likes": 1,
           "movie.release_date": 1,
-          numberOfLikes: { $size: { $ifNull: ["$movies.likes", []] } },
-          numberOfComments: { $size: { $ifNull: ["$movies.comments", []] } },
+          "movie.numberOfLikes": { $size: { $ifNull: ["$movie.likes", []] } },
+          "movie.numberOfComments": {
+            $size: { $ifNull: ["$movie.comments", []] },
+          },
         },
       },
       { $skip: (page - 1) * 10 },
@@ -58,18 +62,27 @@ export async function main(event) {
     .toArray();
 
   movies.forEach((movie) => {
-    movie.isTopListed = true;
+    movie.movie.isTopListed = true;
     if (movie.likes) {
-      movie.isLikedByUser = movie.likes.includes(userId);
+      movie.movie.isLikedByUser = movie.likes.includes(userId);
       movie.likes = null;
     } else {
-      movie.isLikedByUser = false;
+      movie.movie.isLikedByUser = false;
     }
+  });
+
+  const formatedMovies = [];
+  movies.forEach((movie) => {
+    formatedMovies.push({
+      ...movie.movie,
+      joinedActors: movie.joinedActors,
+      joinedDirectors: movie.joinedDirectors,
+    });
   });
 
   return {
     statusCode: 200,
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(movies),
+    body: JSON.stringify(formatedMovies),
   };
 }

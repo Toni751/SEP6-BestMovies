@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import movieservice from "../services/movieservice";
 import MovieCard from "./MovieCard";
-import "../styles/Discover.css";
-import "../styles/Trending.css";
+import "../styles/Commons.css";
 import fire from "../images/fire.png";
 import MovieListPagination from "./MovieListPagination";
 
@@ -14,9 +13,9 @@ const Trending = () => {
   useEffect(() => {
     movieservice
       .getMovies()
-      .then((data) => {
-        console.log(data);
-        setMovies(data.data);
+      .then((response) => {
+        console.log(response.data);
+        setMovies(response.data);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -27,7 +26,7 @@ const Trending = () => {
 
   return (
     <div className="discover_div">
-      <div className="trending_div">
+      <div className="header_w_icon_div">
         <p className="subheader inter_bold">What's trending?</p>
         <img src={fire} alt="fire icon" width="30px" height="30px"></img>
       </div>

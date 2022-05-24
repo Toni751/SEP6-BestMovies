@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { AuthContext } from "../auth/AuthProvider";
 import "../styles/SeeProfile.css";
 import { useNavigate } from "react-router-dom";
+import userservice from "../services/userservice";
 
 const SeeProfile = () => {
   const auth = useContext(AuthContext);
@@ -15,7 +16,13 @@ const SeeProfile = () => {
   };
 
   const deleteAccount = () => {
-    auth.deleteAccount();
+    userservice
+      .deleteUser(auth.user.username)
+      .then(() => {
+        console.log("User deleted successfully");
+        auth.deleteAccount();
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
