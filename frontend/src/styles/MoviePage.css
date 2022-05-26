@@ -38,3 +38,6 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.movie_overview {
+  max-width: 155ch;
+}

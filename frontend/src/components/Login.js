@@ -50,6 +50,8 @@ const Login = () => {
         clearFields();
         setErrorMessage(response);
       }
+    } else {
+      setErrorMessage(newErrorMessage);
     }
   };
 

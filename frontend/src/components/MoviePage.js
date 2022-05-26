@@ -38,7 +38,7 @@ const MoviePage = () => {
         </div>
         <div className="movie_details_description_div">
           <p className="inter_bold top_margin_text">Overview:</p>
-          <p className="Overview top_margin_text">{movie.overview}</p>
+          <p className="movie_overview top_margin_text">{movie.overview}</p>
           <p className="inter_bold top_margin_text">Known for:</p>
           {/* <p className="top_margin_text">
             {movie.movieMovies &&

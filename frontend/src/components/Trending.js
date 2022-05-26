@@ -7,7 +7,6 @@ import MovieListPagination from "./MovieListPagination";
 
 const Trending = () => {
   const [movies, setMovies] = useState([]);
-  const [moviesToDisplay, setMoviesToDisplay] = useState([]);
   const [page, setPage] = useState(1);
 
   useEffect(() => {
