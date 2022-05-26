@@ -14,6 +14,7 @@ import RequireAuth from "./auth/RequireAuth";
 import Trending from "./components/Trending";
 import MoviePage from "./components/MoviePage";
 import ActorPage from "./components/ActorPage";
+import ChartsPage from "./components/ChartsPage";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="discover" element={<Discover />}></Route>
         <Route path="movie/:movieId" element={<MoviePage />}></Route>
         <Route path="person/:personId" element={<ActorPage />}></Route>
+        <Route path="charts" element={<ChartsPage />}></Route>
         <Route
           path="seeprofile"
           element={

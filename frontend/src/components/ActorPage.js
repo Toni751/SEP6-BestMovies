@@ -10,7 +10,6 @@ const ActorPage = () => {
   const [person, setPerson] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [chartPersonMovies, setChartPersonMovies] = useState({});
-  let allMovies = [];
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,26 +21,8 @@ const ActorPage = () => {
     peopleservice
       .getPersonById(personId)
       .then((response) => {
-        console.log(response.data);
         setPerson(response.data[0]);
-        console.log("Movies:", response.data[0].actorMovies);
-        allMovies = [
-          ...response.data[0].actorMovies,
-          ...response.data[0].directorMovies,
-        ];
-        console.log("Toate filmele:", allMovies);
-
-        allMovies.sort((a, b) => b.vote_average - a.vote_average);
-        let slice = allMovies;
-        allMovies = slice.slice(0, 15);
-        console.log("Sorted movies:", allMovies);
-
-        for (let i = 0; i < allMovies.length; i++) {
-          if (allMovies[i].vote_average === 0) {
-            allMovies.pop(allMovies[i]);
-          }
-        }
-
+        let allMovies = sortMovies(response.data[0]);
         setChartForPersonMovies(allMovies);
       })
       .catch((err) => console.log(err));
@@ -59,7 +40,18 @@ const ActorPage = () => {
     setShowModal(false);
   };
 
-  const sortMovies = (movies) => {};
+  const sortMovies = (movies) => {
+    let mergedMovies = [...movies.actorMovies, ...movies.directorMovies];
+
+    for (let i = 0; i < mergedMovies.length; i++) {
+      if (mergedMovies[i].vote_average === 0) {
+        mergedMovies.splice([i], 1);
+      }
+    }
+    return mergedMovies
+      .sort((a, b) => b.vote_average - a.vote_average)
+      .slice(0, 15);
+  };
 
   const setChartForPersonMovies = (movies) => {
     let barThickness = 0;
@@ -143,7 +135,11 @@ const ActorPage = () => {
       <div className="chart_div">
         <p className="sub_subheader inter_medium">Top movies by rating</p>
         {Object.keys(chartPersonMovies).length !== 0 && (
-          <BarChart chartData={chartPersonMovies} className="charts" />
+          <BarChart
+            chartData={chartPersonMovies}
+            axis={"y"}
+            className="charts"
+          />
         )}
       </div>
     </div>

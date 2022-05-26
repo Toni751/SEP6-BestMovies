@@ -5,7 +5,7 @@ export async function main(event) {
 
   const userId = event.pathParameters.user_id;
 
-  const genres = await db
+  const years = await db
     .collection("toplists")
     .aggregate([
       { $match: { user_id: userId } },
@@ -17,29 +17,29 @@ export async function main(event) {
           as: "movies",
         },
       },
-      { $project: { _id: 0, "movies.genres": 1 } },
       { $unwind: "$movies" },
+      {
+        $project: { _id: 1, year: { $substr: ["$movies.release_date", 0, 4] } },
+      },
     ])
     .toArray();
 
-  let genresData = [];
+  let yearsData = [];
 
-  genres.forEach((element) => {
-    if (element && element.movies && element.movies.genres) {
-      element.movies.genres.forEach((genre) => {
-        const found = genresData.find((g) => g.name === genre);
-        if (found) {
-          found.count++;
-        } else {
-          genresData.push({ name: genre, count: 1 });
-        }
-      });
+  years.forEach((element) => {
+    if (element && element.year) {
+      const found = yearsData.find((y) => y.year === element.year);
+      if (found) {
+        found.count++;
+      } else {
+        yearsData.push({ year: element.year, count: 1 });
+      }
     }
   });
 
   return {
     statusCode: 200,
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(genresData),
+    body: JSON.stringify(yearsData),
   };
 }

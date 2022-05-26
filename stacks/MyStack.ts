@@ -66,6 +66,7 @@ export function MyStack({ stack, app }: StackContext) {
       "DELETE /movies/comments/{comment_id}": "movies/deleteComment.main",
       "GET /people/highest_rated": "people/getHighestRatedPeople.main",
       "GET /toplists/{user_id}/genres": "users/getUserGenres.main",
+      "GET /toplists/{user_id}/years": "users/getUserYears.main",
       "GET /movies/years_average": "movies/getMoviesYearAverage.main",
     },
   });

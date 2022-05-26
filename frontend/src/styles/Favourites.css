@@ -1,5 +1,29 @@
-.favourites.div {
+.tabs_div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.tab_link {
+  margin: 0px 10px 30px 10px;
+  border-bottom: 0.5px solid #e8931c;
+  font-size: 20px;
+}
+.tab_link:hover {
+  color: #e8931c;
+}
+.single_chart_div {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 40%;
+}
+.charts_div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+  max-height: 350px;
+}
+.fav_bar_charts {
+  width: 10px !important;
 }

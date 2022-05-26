@@ -1,13 +1,12 @@
 import { Chart as ChartJS } from "chart.js/auto";
-import { Bar } from "react-chartjs-2";
+import { Line } from "react-chartjs-2";
 
-const BarChart = ({ chartData, axis }) => {
+const LineChart = ({ chartData }) => {
   return (
-    <Bar
+    <Line
       data={chartData}
       options={{
-        indexAxis: axis,
-        color: "white",
+        maintainAspectRatio: false,
         plugins: {
           legend: {
             display: false,
@@ -26,8 +25,8 @@ const BarChart = ({ chartData, axis }) => {
           },
         },
       }}
-    ></Bar>
+    ></Line>
   );
 };
 
-export default BarChart;
+export default LineChart;

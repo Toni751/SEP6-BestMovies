@@ -19,6 +19,7 @@
     "@serverless-stack/resources": "^1.1.2",
     "@serverless-stack/static-site-env": "^1.1.2",
     "aws-cdk-lib": "2.24.0",
-    "mongodb": "^4.5.0"
+    "mongodb": "^4.5.0",
+    "multiselect-react-dropdown": "^2.0.22"
   }
 }

@@ -1,14 +1,19 @@
 import React, { useState, useEffect, useContext } from "react";
-import MovieCard from "./MovieCard";
-import "../styles/Commons.css";
 import sparkles from "../images/sparkles.png";
 import MovieListPagination from "./MovieListPagination";
 import userservice from "../services/userservice";
 import { AuthContext } from "../auth/AuthProvider";
+import "../styles/Favourites.css";
+import MovieList from "./MovieList";
+import PieChart from "./PieChart";
+import BarChart from "./BarChart";
 
 const Favourites = () => {
   const [page, setPage] = useState(1);
   const [movies, setMovies] = useState([]);
+  const [seeTab, setSeeTab] = useState("movies");
+  const [pieChartData, setPieChartData] = useState({});
+  const [barChartData, setBarChartData] = useState({});
   const auth = useContext(AuthContext);
 
   useEffect(() => {
@@ -34,20 +39,132 @@ const Favourites = () => {
     setPage(current_page_index);
   };
 
+  const goToMovies = () => {
+    setSeeTab("movies");
+  };
+
+  const goToCharts = () => {
+    setSeeTab("charts");
+    fetchAndSetPieChartData();
+    fetchAndSetBarChartData();
+  };
+
+  const fetchAndSetPieChartData = () => {
+    userservice
+      .getUserGenres(getUserId())
+      .then((response) => {
+        console.log("User genres: ", response.data);
+        setPieChart(response.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const setPieChart = (data) => {
+    setPieChartData({
+      labels: data.map((genres) => genres.name),
+
+      datasets: [
+        {
+          label: "Genres",
+          data: data.map((genres) => genres.count),
+          backgroundColor: ["#f4cb92", "#e8931c", "#b97516"],
+          width: "100px",
+        },
+      ],
+    });
+  };
+
+  const fetchAndSetBarChartData = () => {
+    userservice
+      .getUserYears(getUserId())
+      .then((response) => {
+        console.log("User years: ", response.data);
+        setBarChart(response.data);
+        console.log(barChartData);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const setBarChart = (data) => {
+    let barThickness = 0;
+    if (movies.length <= 5) {
+      barThickness = 60;
+    } else if (movies.length <= 10) {
+      barThickness = 30;
+    } else {
+      barThickness = 10;
+    }
+    setBarChartData({
+      labels: data.map((obj) => obj.year),
+
+      datasets: [
+        {
+          label: "Genres",
+          data: data.map((obj) => obj.count),
+          backgroundColor: ["#f4cb92", "#e8931c", "#b97516"],
+          width: "100px",
+          barThickness: barThickness,
+        },
+      ],
+    });
+  };
   return (
     <div className="discover_div">
       <div className="header_w_icon_div">
         <p className="subheader inter_bold">Favourites </p>
         <img src={sparkles} alt="fire icon" width="30px" height="30px"></img>
       </div>
-      {movies.map((movie) => (
-        <MovieCard key={movie._id} movie={movie} />
-      ))}
-      <MovieListPagination parentCallback={(p) => handleCallback(p)} />
-      <p>
-        Page: <span className="inter_bold">{page}</span> out of{" "}
-        <span className="inter_bold">10</span>
-      </p>
+      <div className="tabs_div">
+        <p
+          className="tab_link"
+          style={seeTab === "movies" ? { color: "#e8931c" } : {}}
+          onClick={() => goToMovies()}
+        >
+          Movies
+        </p>
+        <p
+          className="tab_link"
+          style={seeTab === "charts" ? { color: "#e8931c" } : {}}
+          onClick={() => goToCharts()}
+        >
+          Statistics
+        </p>
+      </div>
+      {seeTab === "movies" && (
+        <React.Fragment>
+          <MovieList parentMovies={movies} />
+          <MovieListPagination parentCallback={(p) => handleCallback(p)} />
+          <p>
+            Page: <span className="inter_bold">{page}</span> out of{" "}
+            <span className="inter_bold">10</span>
+          </p>
+        </React.Fragment>
+      )}
+      {seeTab === "charts" &&
+        Object.keys(pieChartData).length !== 0 &&
+        Object.keys(barChartData).length !== 0 && (
+          <div className="charts_div">
+            <div className="single_chart_div">
+              <p className="sub_subheader inter_bold">
+                Your most favorite genres
+              </p>
+              <PieChart
+                chartData={pieChartData}
+                className="charts fav_bar_chart"
+              ></PieChart>
+            </div>
+            <div className="single_chart_div">
+              <p className="sub_subheader inter_bold">
+                Your most favorite years
+              </p>
+              <BarChart
+                chartData={barChartData}
+                axis={"y"}
+                className="charts fav_bar_chart"
+              ></BarChart>
+            </div>
+          </div>
+        )}
     </div>
   );
 };
