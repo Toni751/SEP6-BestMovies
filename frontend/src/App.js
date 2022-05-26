@@ -12,10 +12,8 @@ import Navbar from "./components/Navbar";
 import "./styles/Commons.css";
 import RequireAuth from "./auth/RequireAuth";
 import Trending from "./components/Trending";
-import MovieCard from "./components/MovieCard";
 import MoviePage from "./components/MoviePage";
 import ActorPage from "./components/ActorPage";
-import ActorBiography from "./components/ActorBiography";
 
 function App() {
   return (

@@ -1,5 +1,6 @@
 import { getDbConnection } from "../utility/utilitySSM";
 
+let totalNumberOfPages = 0;
 export async function main(event) {
   const db = await getDbConnection();
 
@@ -9,6 +10,9 @@ export async function main(event) {
   const movies = await db
     .collection("movies")
     .aggregate([
+      {
+        $match: { "likes.0": { $exists: true } },
+      },
       {
         $lookup: {
           from: "people",
@@ -41,7 +45,7 @@ export async function main(event) {
           numberOfComments: { $size: { $ifNull: ["$comments", []] } },
         },
       },
-      { $sort: { numberOfLikes: 1 } },
+      { $sort: { numberOfLikes: -1 } },
       { $skip: (page - 1) * 10 },
       { $limit: 10 },
     ])
@@ -66,9 +70,19 @@ export async function main(event) {
     }
   });
 
+  if (totalNumberOfPages === 0) {
+    const numberOfDocuments = await db
+      .collection("movies")
+      .countDocuments({ "likes.0": { $exists: true } });
+    totalNumberOfPages = Math.floor(numberOfDocuments / 10);
+    if (numberOfDocuments % 10 !== 0) {
+      totalNumberOfPages += 1;
+    }
+  }
+
   return {
     statusCode: 200,
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(movies),
+    body: JSON.stringify({ movies, totalNumberOfPages }),
   };
 }

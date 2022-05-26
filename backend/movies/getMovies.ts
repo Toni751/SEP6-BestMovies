@@ -94,7 +94,7 @@ export async function main(event) {
 
   if (totalNumberOfPages === 0) {
     const numberOfDocuments = await db.collection("movies").countDocuments();
-    totalNumberOfPages = numberOfDocuments / 10;
+    totalNumberOfPages = Math.floor(numberOfDocuments / 10);
     if (numberOfDocuments % 10 !== 0) {
       totalNumberOfPages += 1;
     }

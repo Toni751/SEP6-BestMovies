@@ -30,7 +30,7 @@ class MovieWebClientService {
     return http.post(`${this.urlResource}/likes`, movieLike, getAuthHeader());
   }
 
-  addMoviecomment(moviecomment) {
+  addMovieComment(moviecomment) {
     return http.post(
       `${this.urlResource}/comments`,
       moviecomment,

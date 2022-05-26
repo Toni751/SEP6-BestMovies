@@ -157,7 +157,8 @@ const MovieCard = ({ movie, handleLike, handleStar }) => {
           </div>
 
           <p className="links" onClick={() => goToMovieDetails()}>
-            {movie.numberOfComments} comments...
+            {movie.numberOfComments}{" "}
+            {movie.numberOfComments !== 1 ? "comments..." : "comment..."}
           </p>
         </div>
       </div>

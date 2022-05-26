@@ -5,16 +5,17 @@ export async function main(event) {
   const db = await getDbConnection();
 
   const { comment, userId, movieId } = JSON.parse(event.body);
+  const newComment = {
+    _id: new ObjectId(),
+    user_id: userId,
+    comment: comment,
+    created_at: new Date(),
+  };
   let response = await db.collection("movies").updateOne(
     { _id: movieId },
     {
       $push: {
-        comments: {
-          _id: new ObjectId(),
-          user_id: userId,
-          comment: comment,
-          created_at: new Date(),
-        },
+        comments: newComment,
       },
     }
   );
@@ -22,6 +23,6 @@ export async function main(event) {
   return {
     statusCode: 200,
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(response),
+    body: JSON.stringify(newComment),
   };
 }
