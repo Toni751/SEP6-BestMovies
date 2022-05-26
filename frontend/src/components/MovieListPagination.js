@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import "../styles/MovieListPagination.css";
 
-const MovieListPagination = ({ parentCallback }) => {
+const MovieListPagination = ({ parentCallback, totalNumberOfPages }) => {
   const [currentIndex, setCurrentIndex] = useState(1);
-  const [totalPageNo, setTotalPageNo] = useState(10);
 
   const onButtonTrigger = (index) => {
-    if (index <= totalPageNo && index >= 1) {
+    if (index <= totalNumberOfPages && index >= 1) {
       setCurrentIndex(index);
       parentCallback(index);
     }
@@ -37,7 +36,7 @@ const MovieListPagination = ({ parentCallback }) => {
       </button>
       <button
         className="pagination_button"
-        onClick={() => onButtonTrigger(totalPageNo)}
+        onClick={() => onButtonTrigger(totalNumberOfPages)}
       >
         {">>"}
       </button>

@@ -1,5 +1,6 @@
 import { getDbConnection } from "../utility/utilitySSM";
 
+let totalNumberOfPages = 0;
 export async function main(event) {
   const db = await getDbConnection();
 
@@ -19,6 +20,7 @@ export async function main(event) {
   if (!isGenresEmpty) {
     genres = genresRaw.split(",");
   }
+  console.log("Genres", genres, genresRaw);
   const genresMatchObject = isGenresEmpty
     ? { release_date: { $lte: currentYear } }
     : {
@@ -90,9 +92,17 @@ export async function main(event) {
     }
   });
 
+  if (totalNumberOfPages === 0) {
+    const numberOfDocuments = await db.collection("movies").countDocuments();
+    totalNumberOfPages = numberOfDocuments / 10;
+    if (numberOfDocuments % 10 !== 0) {
+      totalNumberOfPages += 1;
+    }
+  }
+
   return {
     statusCode: 200,
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(movies),
+    body: JSON.stringify({ movies, totalNumberOfPages }),
   };
 }

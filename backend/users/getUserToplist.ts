@@ -40,6 +40,7 @@ export async function main(event) {
       {
         $project: {
           _id: 0,
+          "movie._id": 1,
           "movie.title": 1,
           "movie.vote_average": 1,
           "movie.genres": 1,
