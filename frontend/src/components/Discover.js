@@ -6,6 +6,7 @@ import MovieListPagination from "./MovieListPagination";
 import Multiselect from "multiselect-react-dropdown";
 import allGenres from "../utils/genres";
 import MovieList from "./MovieList";
+import fire from "../images/fire.png";
 
 const convertGenresToString = (genres) => {
   const genreNames = [];
@@ -89,6 +90,7 @@ const Discover = () => {
           onSelect={(list, item) => onGenreSelect(list, item)}
           onRemove={(list, item) => onGenreRemove(list, item)}
           displayValue="name"
+          avoidHighlightFirstOption={true}
           style={{
             searchBox: {
               backgroundColor: "white",

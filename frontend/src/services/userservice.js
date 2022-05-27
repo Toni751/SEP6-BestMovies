@@ -11,7 +11,12 @@ class UserWebClientService {
       getAuthHeader()
     );
   }
-
+  getUserYears(userId) {
+    return http.get(
+      `${this.toplistsUrlResource}/${userId}/years`,
+      getAuthHeader()
+    );
+  }
   getUserToplist(userId, page) {
     return http.get(
       `${this.toplistsUrlResource}/${userId}?page=${page}`,

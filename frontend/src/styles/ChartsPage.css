@@ -1,0 +1,12 @@
+.charts_page_div {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+}
+.line_chart_div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 200px 0px 200px 0px;
+  height: 500px;
+}
