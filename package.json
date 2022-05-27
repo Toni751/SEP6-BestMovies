@@ -15,11 +15,11 @@
     ]
   },
   "dependencies": {
-    "@serverless-stack/cli": "^1.1.2",
-    "@serverless-stack/resources": "^1.1.2",
-    "@serverless-stack/static-site-env": "^1.1.2",
-    "aws-cdk-lib": "2.24.0",
-    "mongodb": "^4.5.0",
-    "multiselect-react-dropdown": "^2.0.22"
+    "@serverless-stack/cli": "^1.2.11",
+    "@serverless-stack/resources": "^1.2.11",
+    "@serverless-stack/static-site-env": "^1.2.11",
+    "aws-cdk-lib": "^2.24.0",
+    "mongodb": "^4.6.0",
+    "vitest": "^0.12.9"
   }
 }
