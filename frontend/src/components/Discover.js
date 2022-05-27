@@ -6,7 +6,7 @@ import MovieListPagination from "./MovieListPagination";
 import Multiselect from "multiselect-react-dropdown";
 import allGenres from "../utils/genres";
 import MovieList from "./MovieList";
-import fire from "../images/fire.png";
+import { useNavigate } from "react-router-dom";
 
 const convertGenresToString = (genres) => {
   const genreNames = [];
@@ -16,6 +16,7 @@ const convertGenresToString = (genres) => {
 
 const Discover = () => {
   const auth = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
@@ -72,9 +73,17 @@ const Discover = () => {
     fetchMovies(page, filter, list);
   };
 
+  const goToChartsPage = () => {
+    navigate("/charts");
+  };
+
   return (
     <div className="discover_div">
       <p className="subheader inter_bold">Discover the newest movies</p>
+      <p className="links positive_margin" onClick={() => goToChartsPage()}>
+        Are you into statistics? Click here!
+      </p>
+
       <div className="div_dropdown">
         <select
           className="dropdown_list discover_dropdown"
@@ -100,6 +109,7 @@ const Discover = () => {
               alignItems: "center",
               marginLeft: "10px",
               width: "500px",
+              overflow: "hidden",
             },
             optionContainer: {
               color: "black",
