@@ -15,7 +15,7 @@ const ActorPage = () => {
 
   useEffect(() => {
     getPersonAndSetChart();
-  }, []);
+  }, [personId]);
 
   const getPersonAndSetChart = () => {
     console.log("Person page", personId);
@@ -65,8 +65,10 @@ const ActorPage = () => {
     let barThickness = 0;
     if (movies.length <= 5) {
       barThickness = 60;
-    } else if (movies.length <= 10) {
+    } else if (movies.length <= 8) {
       barThickness = 30;
+    } else if (movies.length <= 12) {
+      barThickness = 15;
     } else {
       barThickness = 10;
     }

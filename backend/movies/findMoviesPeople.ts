@@ -15,7 +15,7 @@ export async function main(event) {
         },
       },
       { $limit: 5 },
-      { $project: { title: 1 } },
+      { $project: { _id: 1, name: "$title", type: "movie" } },
     ])
     .toArray();
 
@@ -28,15 +28,15 @@ export async function main(event) {
         },
       },
       { $limit: 5 },
-      { $project: { name: 1 } },
+      { $project: { _id: 1, name: 1, type: "person" } },
     ])
     .toArray();
 
   const responseList = [];
   const numberOfMovies = people.length > 1 ? 3 : 5 - people.length;
   const numberOfPeople = movies.length > 2 ? 2 : 5 - movies.length;
-  responseList.push(movies.slice(0, numberOfMovies));
-  responseList.push(people.slice(0, numberOfPeople));
+  responseList.push(...movies.slice(0, numberOfMovies));
+  responseList.push(...people.slice(0, numberOfPeople));
 
   return {
     statusCode: 200,

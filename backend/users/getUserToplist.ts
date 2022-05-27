@@ -1,5 +1,6 @@
 import { getDbConnection } from "../utility/utilitySSM";
 
+let totalNumberOfPages = 0;
 export async function main(event) {
   const db = await getDbConnection();
 
@@ -81,9 +82,25 @@ export async function main(event) {
     });
   });
 
+  const userToplist = await db
+    .collection("toplists")
+    .findOne({ user_id: userId });
+  let numberOfMovies = 0;
+  if (userToplist && userToplist.movie_ids) {
+    numberOfMovies = userToplist.movie_ids.length;
+  }
+  console.log("Number", numberOfMovies);
+  totalNumberOfPages = Math.floor(numberOfMovies / 10);
+  if (numberOfMovies % 10 !== 0) {
+    totalNumberOfPages += 1;
+  }
+
   return {
     statusCode: 200,
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(formatedMovies),
+    body: JSON.stringify({
+      movies: formatedMovies,
+      totalNumberOfPages: totalNumberOfPages,
+    }),
   };
 }

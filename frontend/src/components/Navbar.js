@@ -4,6 +4,7 @@ import logo from "../images/logo.png";
 import fire from "../images/fire.png";
 import { AuthContext } from "../auth/AuthProvider";
 import "../styles/Navbar.css";
+import SearchBar from "./SearchBar";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -43,27 +44,7 @@ const Navbar = () => {
           height="63px"
           onClick={() => handleLogoClick()}
         />
-        <div>
-          <input
-            type="search"
-            className="form-control search_bar"
-            placeholder="Search for a movie, actor or director..."
-          />
-          <ul
-            style={{
-              position: "absolute",
-              width: "500px",
-              backgroundColor: "red",
-              marginLeft: "30px",
-            }}
-          >
-            <li>Item 1</li>
-            <li>Item 2</li>
-            <li>Item 3</li>
-            <li>Item 4</li>
-            <li>Item 5</li>
-          </ul>
-        </div>
+        <SearchBar />
       </div>
       <div className="nav_div">
         <div className="nav_div" id="trending_nav">

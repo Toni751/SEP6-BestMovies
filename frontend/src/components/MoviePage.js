@@ -32,7 +32,7 @@ const MoviePage = () => {
         setMovie(response.data);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [movieId]);
 
   const addLike = () => {
     if (auth.user && auth.user.username) {
