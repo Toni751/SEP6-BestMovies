@@ -19,6 +19,20 @@ jobs:
         with:
           working-directory: frontend
 
+      - name: Upload the build artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: build
+          path: node_modules/*
+          retention-days: 1
+
+      - name: Upload the frontend build artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: frontend-build
+          path: frontend/node_modules/*
+          retention-days: 1
+
       - uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -40,6 +54,16 @@ jobs:
       name: Development
     steps:
       - uses: actions/checkout@v2
+      - name: Download the build artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: build
+
+      - name: Download the frontend build artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: frontend-build
+
       - name: Deploy Dev
         run: CI=false npm run deploy-dev
 
@@ -52,6 +76,16 @@ jobs:
       name: Staging
     steps:
       - uses: actions/checkout@v2
+      - name: Download the build artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: build
+
+      - name: Download the frontend build artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: frontend-build
+
       - name: Deploy Staging
         run: CI=false npm run deploy-staging
 
@@ -63,5 +97,15 @@ jobs:
       name: Production
     steps:
       - uses: actions/checkout@v2
+      - name: Download the build artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: build
+
+      - name: Download the frontend build artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: frontend-build
+
       - name: Deploy Production
         run: CI=false npm run deploy-prod
