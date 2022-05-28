@@ -44,7 +44,7 @@ const SearchBar = () => {
       <input
         type="search"
         className="form-control search_bar"
-        placeholder="Search for a movie, actor or director UPDATED"
+        placeholder="Search for a movie, actor or director..."
         value={query}
         onChange={(e) => handleQueryChange(e.target.value)}
         onFocus={() => setIsFocused(true)}

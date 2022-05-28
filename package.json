@@ -7,6 +7,8 @@
     "start": "sst start",
     "build": "sst build",
     "deploy": "sst deploy",
+    "deploy-dev": "sst deploy --stage dev",
+    "deploy-staging": "sst deploy --stage staging",
     "deploy-prod": "sst deploy --stage prod",
     "remove": "sst remove"
   },
