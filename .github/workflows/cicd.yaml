@@ -19,12 +19,6 @@ jobs:
         with:
           working-directory: frontend
 
-      - uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-west-1
-
       - name: Serverless tests
         run: npm run test
       - name: Frontend tests
@@ -46,6 +40,12 @@ jobs:
         with:
           working-directory: frontend
 
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-1
+
       - name: Deploy Dev
         run: CI=false npm run deploy-dev
 
@@ -64,6 +64,12 @@ jobs:
         with:
           working-directory: frontend
 
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-1
+
       - name: Deploy Staging
         run: CI=false npm run deploy-staging
 
@@ -80,6 +86,12 @@ jobs:
       - uses: bahmutov/npm-install@v1
         with:
           working-directory: frontend
+
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-1
 
       - name: Deploy Production
         run: CI=false npm run deploy-prod
