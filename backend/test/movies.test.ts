@@ -15,7 +15,7 @@ describe("Comments for a movie", function () {
     };
     const response = await main(event);
     const body = JSON.parse(response.body);
-    expect(body.user_id).toBe("44443");
+    expect(body.user_id).toBe(userId);
     expect(body.comment).toBe(comment);
   });
 });
