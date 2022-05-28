@@ -1,58 +1,33 @@
+name: CI
+
 on:
   push:
-    branches:
-      - master
+    branches: [master]
+  pull_request:
+    branches: [master]
 
-# jobs:
-#   deploy:
-#     name: deploy
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v2
-#       - name: Download Node
-#         uses: actions/setup-node@v1
-#         with:
-#           node-version: "14.x"
-#       - name: Install Serverless-Stack
-#         run: |
-#           npm install @serverless-stack/cli@latest
-#           npm install @serverless-stack/resources@latest
-#           npm install @serverless-stack/static-site-env@latest
-#       - uses: aws-actions/configure-aws-credentials@v1
-#         with:
-#           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#           aws-region: eu-west-1
-#       - name: Install NPM dependencies
-#         run: |
-#           npm install
-#           npm install "./frontend"
-#       - name: Deploy to AWS
-#         run: npx sst deploy --stage prod
 jobs:
-  build-and-test:
-    runs-on: ubuntu-latest
-    name: Build and test
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        node-version: [14.x]
+    runs-on: ${{ matrix.os }}
+
     steps:
       - uses: actions/checkout@v2
-      # Install serverless-stack
-      - uses: bahmutov/npm-install@v1
-
-      # Install react frontend
-      - uses: bahmutov/npm-install@v1
+      - uses: actions/setup-go@v2
+      - uses: actions/cache@v2
         with:
-          working-directory: frontend
+          path: "**/node_modules"
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
 
-      - uses: aws-actions/configure-aws-credentials@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-west-1
-
-      - name: Serverless tests
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependencies
+        run: npm install
+      - name: Test
         run: npm run test
-      - name: Frontend tests
-        run: npm run test
-        working-directory: frontend
-      - name: Deploy app
-        run: npx sst deploy --stage prod
