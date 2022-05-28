@@ -27,7 +27,7 @@ const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
-  const signUp = async (username, email, password, callback) => {
+  const signUp = async (username, email, password) => {
     try {
       const newUser = await Auth.signUp({
         username: username,
@@ -35,10 +35,12 @@ const AuthProvider = ({ children }) => {
         attributes: { email: email },
       });
       console.log("Sign up", newUser);
-      callback(true);
+      return true;
+      // callback(true);
     } catch (e) {
       console.log(e);
-      callback(false);
+      return false;
+      // callback(false);
     }
   };
 

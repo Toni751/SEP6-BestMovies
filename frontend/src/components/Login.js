@@ -8,6 +8,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [userid, setUserid] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [confirmationError, setConfirmationError] = useState("");
   const [isVerified, setIsVerified] = useState(true);
   const [confirmationCode, setConfirmationCode] = useState("");
   const auth = useContext(AuthContext);
@@ -77,6 +78,7 @@ const Login = () => {
       navigate("/discover");
     } else {
       console.log(response);
+      setConfirmationError("Incorrect confirmation code");
     }
   };
 
@@ -102,7 +104,7 @@ const Login = () => {
               onChange={(e) => setConfirmationCode(e.target.value)}
             />
           </div>
-          <span className="auth_err_text">{errorMessage}</span>
+          <span className="auth_err_text">{confirmationCode}</span>
           <button type="submit" className="signup_button">
             Submit
           </button>

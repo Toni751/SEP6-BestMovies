@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "../styles/ActorPage.css";
+import default_movie_logo from "../images/default-movie-logo.png";
 import ActorBiography from "./ActorBiography";
 import peopleservice from "../services/peopleservice";
 import BarChart from "./BarChart";
@@ -89,7 +90,7 @@ const ActorPage = () => {
             src={
               person.profile_path
                 ? `https://image.tmdb.org/t/p/w200${person.profile_path}`
-                : ""
+                : default_movie_logo
             }
             alt="Image of actor"
             className="actor_image"
@@ -97,8 +98,8 @@ const ActorPage = () => {
         </div>
         <div className="actor_description_div">
           <p className="inter_bold top_margin_text">Biography:</p>
-          {person.biography &&
-            (person.biography.length < 1200 ? (
+          {person.biography ? (
+            person.biography.length < 1200 ? (
               <p className="biography top_margin_text">{person.biography}</p>
             ) : (
               <p className="biography top_margin_text">
@@ -107,7 +108,10 @@ const ActorPage = () => {
                   see more.
                 </span>
               </p>
-            ))}
+            )
+          ) : (
+            <p className="biography top_margin_text">No biography available.</p>
+          )}
           <p className="inter_bold top_margin_text">Known for:</p>
           <p className="top_margin_text">
             {person.actorMovies &&

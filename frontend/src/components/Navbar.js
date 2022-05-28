@@ -47,12 +47,14 @@ const Navbar = () => {
         <SearchBar />
       </div>
       <div className="nav_div">
-        <div className="nav_div" id="trending_nav">
-          <p className="links" onClick={() => goToTrending()}>
-            What's trending?
-          </p>
-          <img src={fire} alt="Fire" width="18px" height="18px" />
-        </div>
+        {auth.user && (
+          <div className="nav_div" id="trending_nav">
+            <p className="links" onClick={() => goToTrending()}>
+              What's trending?
+            </p>
+            <img src={fire} alt="Fire" width="18px" height="18px" />
+          </div>
+        )}
         {auth.user ? (
           <div className="changing_div">
             <p className="links margin_text" onClick={() => goToFavourites()}>

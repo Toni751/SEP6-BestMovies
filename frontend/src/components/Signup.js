@@ -11,6 +11,7 @@ const Signup = () => {
   const [isSignedUp, setIsSignedUp] = useState(false);
   const [confirmationCode, setConfirmationCode] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [confirmationError, setConfirmationError] = useState("");
   const auth = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -18,6 +19,7 @@ const Signup = () => {
     const regEmail =
       /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     if (password.length < 8) {
+      console.log("Ana");
       return "Password must contain more than 8 characters.";
     }
     if (!regEmail.test(email)) {
@@ -32,25 +34,20 @@ const Signup = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    console.log("Facem ceva aici???");
     const newErrorMessage = verifiyCredentials();
-
+    console.log("Error message", newErrorMessage);
     if (newErrorMessage === "") {
-      const response = await auth.signUp(
-        username,
-        email,
-        password,
-        (isSuccess) => {
-          if (isSuccess) {
-            console.log("User successfully signed up");
-            setIsSignedUp(true);
-          } else {
-            setIsSignedUp(false);
-            console.log("User cannot be created");
-            setErrorMessage(response);
-          }
-        }
-      );
+      console.log("2", newErrorMessage);
+      const response = await auth.signUp(username, email, password);
+      if (response) {
+        console.log("User successfully signed up");
+        setIsSignedUp(true);
+      } else {
+        setIsSignedUp(false);
+        console.log("User cannot be created");
+        setErrorMessage("User cannot be created");
+      }
     } else {
       setErrorMessage(newErrorMessage);
     }
@@ -70,6 +67,7 @@ const Signup = () => {
       navigate("/discover");
     } else {
       console.log(response);
+      setConfirmationError("Incorrect confirmation code");
     }
   };
 
@@ -99,7 +97,7 @@ const Signup = () => {
               onChange={(e) => setConfirmationCode(e.target.value)}
             />
           </div>
-          <span className="auth_err_text">{errorMessage}</span>
+          <span className="auth_err_text">{confirmationError}</span>
           <button type="submit" className="signup_button">
             Submit
           </button>

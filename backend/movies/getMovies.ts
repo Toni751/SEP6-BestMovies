@@ -24,7 +24,7 @@ export async function main(event) {
   const genresMatchObject = isGenresEmpty
     ? { release_date: { $lte: currentYear } }
     : {
-        genres: { $elemMatch: { $in: genres } },
+        genres: { $all: genres },
         release_date: { $lte: currentYear },
       };
 

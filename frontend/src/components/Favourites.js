@@ -103,7 +103,7 @@ const Favourites = () => {
 
       datasets: [
         {
-          label: "Genres",
+          label: "Number of movies",
           data: data.map((obj) => obj.count),
           backgroundColor: ["#f4cb92", "#e8931c", "#b97516"],
           width: "100px",
@@ -134,26 +134,36 @@ const Favourites = () => {
           Statistics
         </p>
       </div>
-      {seeTab === "movies" && (
-        <React.Fragment>
-          <MovieList parentMovies={movies} />
-          <MovieListPagination
-            parentCallback={(p) => handleCallback(p)}
-            totalNumberOfPages={totalNumberOfPages}
-          />
-          <p>
-            Page: <span className="inter_bold">{page}</span> out of{" "}
-            <span className="inter_bold">{totalNumberOfPages}</span>
+      {seeTab === "movies" &&
+        (movies && movies.length > 0 ? (
+          <React.Fragment>
+            <MovieList parentMovies={movies} />
+            <MovieListPagination
+              parentCallback={(p) => handleCallback(p)}
+              totalNumberOfPages={totalNumberOfPages}
+            />
+            <p>
+              Page: <span className="inter_bold">{page}</span> out of{" "}
+              <span className="inter_bold">{totalNumberOfPages}</span>
+            </p>
+          </React.Fragment>
+        ) : (
+          <p className="sub_subheader inter_bold">
+            You have no movies in your favourites' list.
           </p>
-        </React.Fragment>
-      )}
+        ))}
       {seeTab === "charts" &&
+        movies &&
+        movies.length > 0 &&
         Object.keys(pieChartData).length !== 0 &&
         Object.keys(barChartData).length !== 0 && (
           <div className="charts_div">
             <div className="single_chart_div">
               <p className="sub_subheader inter_bold">
                 Your most favorite genres
+              </p>
+              <p className="helper_text helper_text_margin">
+                *The genres in your favourites' list and how often they occur.
               </p>
               <PieChart
                 chartData={pieChartData}
@@ -164,6 +174,9 @@ const Favourites = () => {
               <p className="sub_subheader inter_bold">
                 Your most favorite years
               </p>
+              <p className="helper_text helper_text_margin">
+                *The most occuring years in your favourites' list.
+              </p>
               <BarChart
                 chartData={barChartData}
                 axis={"y"}
@@ -172,6 +185,11 @@ const Favourites = () => {
             </div>
           </div>
         )}
+      {seeTab === "charts" && (movies === null || movies.length === 0) && (
+        <p className="sub_subheader inter_bold">
+          You have no movies in your favourites' list.
+        </p>
+      )}
     </div>
   );
 };
