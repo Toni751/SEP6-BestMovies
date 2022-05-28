@@ -15,10 +15,6 @@ jobs:
       - uses: actions/checkout@v2
       - uses: bahmutov/npm-install@v1
 
-      - uses: bahmutov/npm-install@v1
-        with:
-          working-directory: frontend
-
       - name: Serverless tests
         run: npm run test
       - name: Frontend tests
@@ -36,9 +32,6 @@ jobs:
       - uses: actions/checkout@v2
 
       - uses: bahmutov/npm-install@v1
-      - uses: bahmutov/npm-install@v1
-        with:
-          working-directory: frontend
 
       - uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -60,9 +53,6 @@ jobs:
       - uses: actions/checkout@v2
 
       - uses: bahmutov/npm-install@v1
-      - uses: bahmutov/npm-install@v1
-        with:
-          working-directory: frontend
 
       - uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -83,9 +73,6 @@ jobs:
       - uses: actions/checkout@v2
 
       - uses: bahmutov/npm-install@v1
-      - uses: bahmutov/npm-install@v1
-        with:
-          working-directory: frontend
 
       - uses: aws-actions/configure-aws-credentials@v1
         with:
