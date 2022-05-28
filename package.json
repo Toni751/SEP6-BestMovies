@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "test": "sst test",
+    "test": "vitest run",
     "start": "sst start",
     "build": "sst build",
     "deploy": "sst deploy",
