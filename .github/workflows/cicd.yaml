@@ -5,6 +5,7 @@ on:
   pull_request:
     branches:
       - master
+  workflow_dispatch:
 
 jobs:
   build-and-test:
@@ -38,6 +39,7 @@ jobs:
     environment:
       name: Development
     steps:
+      - uses: actions/checkout@v2
       - name: Deploy Dev
         run: CI=false npm run deploy-dev
 
@@ -49,6 +51,7 @@ jobs:
     environment:
       name: Staging
     steps:
+      - uses: actions/checkout@v2
       - name: Deploy Staging
         run: CI=false npm run deploy-staging
 
@@ -59,5 +62,6 @@ jobs:
     environment:
       name: Production
     steps:
+      - uses: actions/checkout@v2
       - name: Deploy Production
         run: CI=false npm run deploy-prod
