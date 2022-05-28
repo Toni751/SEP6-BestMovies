@@ -30,21 +30,27 @@ const Signup = () => {
     }
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     const newErrorMessage = verifiyCredentials();
 
     if (newErrorMessage === "") {
-      auth.signUp(username, email, password, (isSuccess) => {
-        if (isSuccess) {
-          console.log("User successfully signed up");
-          setIsSignedUp(true);
-        } else {
-          setIsSignedUp(false);
-          console.log("User cannot be created");
+      const response = await auth.signUp(
+        username,
+        email,
+        password,
+        (isSuccess) => {
+          if (isSuccess) {
+            console.log("User successfully signed up");
+            setIsSignedUp(true);
+          } else {
+            setIsSignedUp(false);
+            console.log("User cannot be created");
+            setErrorMessage(response);
+          }
         }
-      });
+      );
     } else {
       setErrorMessage(newErrorMessage);
     }
