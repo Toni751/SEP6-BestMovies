@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Build and test
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       # Install serverless-stack
       - uses: bahmutov/npm-install@v1
 
