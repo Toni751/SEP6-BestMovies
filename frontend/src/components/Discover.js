@@ -80,7 +80,7 @@ const Discover = () => {
   return (
     <div className="discover_div">
       <p className="subheader inter_bold">Discover the newest movies</p>
-      <p className="links positive_margin" onClick={() => goToChartsPage()}>
+      <p className="links helper_text_margin" onClick={() => goToChartsPage()}>
         Are you into statistics? Click here!
       </p>
 
@@ -98,6 +98,7 @@ const Discover = () => {
           selectedValues={genres}
           onSelect={(list, item) => onGenreSelect(list, item)}
           onRemove={(list, item) => onGenreRemove(list, item)}
+          placeholder="Select genres"
           displayValue="name"
           avoidHighlightFirstOption={true}
           style={{

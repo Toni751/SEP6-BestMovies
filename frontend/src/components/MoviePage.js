@@ -150,50 +150,70 @@ const MoviePage = () => {
         <div className="movie_details_description_div">
           <p className="inter_bold top_margin_text">Description:</p>
           <p className="movie_overview top_margin_text">{movie.overview}</p>
-          <p className="top_margin_text">
-            <span className="inter_bold ">Genre(s):</span>{" "}
-            {movie.genres && movie.genres.toString()}
-          </p>
+          {movie.genres && movie.genres.length !== 0 ? (
+            <p className="top_margin_text">
+              <span className="inter_bold ">Genre(s):</span>{" "}
+              {movie.genres && movie.genres.toString()}
+            </p>
+          ) : (
+            <p className="top_margin_text">
+              <span className="inter_bold ">Genre(s):</span> Unknown
+            </p>
+          )}
+
           <p className="top_margin_text">
             <span className="inter_bold ">Rating:</span>{" "}
             {movie.vote_average ? movie.vote_average : "Unknown"}
           </p>
           <p className="top_margin_text">
             <span className="inter_bold ">Release date:</span>{" "}
-            {movie.release_date}
+            {movie.release_date ? movie.release_date : "Unknown"}
           </p>
-          <p className="top_margin_text">
-            <span className="inter_bold">Director(s): </span>
-            {movie.directors &&
-              movie.directors.map((person, index) => {
-                return (
-                  <span
-                    key={person._id}
-                    className="person_name"
-                    onClick={() => handleNavigatePerson(person._id)}
-                  >
-                    {person.name}
-                    {index !== movie.directors.length - 1 && ", "}
-                  </span>
-                );
-              })}
-          </p>
-          <p className="top_margin_text">
-            <span className="inter_bold">Actors:</span>{" "}
-            {movie.actors &&
-              movie.actors.map((person, index) => {
-                return (
-                  <span
-                    key={person._id}
-                    className="person_name"
-                    onClick={() => handleNavigatePerson(person._id)}
-                  >
-                    {person.name}
-                    {index !== movie.actors.length - 1 && ", "}
-                  </span>
-                );
-              })}
-          </p>
+          {movie.directors && movie.directors.length !== 0 ? (
+            <p className="top_margin_text">
+              <span className="inter_bold">Director(s): </span>
+              {movie.directors &&
+                movie.directors.map((person, index) => {
+                  return (
+                    <span
+                      key={person._id}
+                      className="person_name"
+                      onClick={() => handleNavigatePerson(person._id)}
+                    >
+                      {person.name}
+                      {index !== movie.directors.length - 1 && ", "}
+                    </span>
+                  );
+                })}
+            </p>
+          ) : (
+            <p className="top_margin_text">
+              <span className="inter_bold">Director(s): </span>
+              Unknown
+            </p>
+          )}
+          {movie.actors && movie.actors.length !== 0 ? (
+            <p className="top_margin_text">
+              <span className="inter_bold">Actors:</span>{" "}
+              {movie.actors &&
+                movie.actors.map((person, index) => {
+                  return (
+                    <span
+                      key={person._id}
+                      className="person_name"
+                      onClick={() => handleNavigatePerson(person._id)}
+                    >
+                      {person.name}
+                      {index !== movie.actors.length - 1 && ", "}
+                    </span>
+                  );
+                })}
+            </p>
+          ) : (
+            <p className="top_margin_text">
+              <span className="inter_bold">Actors:</span> Unknown
+            </p>
+          )}
         </div>
       </div>
 

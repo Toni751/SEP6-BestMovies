@@ -160,3 +160,7 @@ button:hover {
 .charts {
   width: 100%;
 }
+
+.helper_text_margin {
+  margin: -25px 0px 50px 0px;
+}

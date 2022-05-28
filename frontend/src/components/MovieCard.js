@@ -105,10 +105,17 @@ const MovieCard = ({ movie, handleLike, handleStar }) => {
           <span className="inter_medium">Rating: </span>
           {movie.vote_average}
         </p>
-        <p className="row_div">
-          <span className="inter_medium">Genres: </span>
-          {movie.genres.toString()}
-        </p>
+        {movie.genres && movie.genres.length !== 0 ? (
+          <p className="row_div">
+            <span className="inter_medium">Genres: </span>
+            {movie.genres.join(", ")}
+          </p>
+        ) : (
+          <p className="row_div">
+            <span className="inter_medium">Genres: </span>
+            Unknown
+          </p>
+        )}
 
         <div>
           <p className="row_div">
@@ -132,28 +139,35 @@ const MovieCard = ({ movie, handleLike, handleStar }) => {
 
         <div className="footer_row_div">
           <div>
-            <p>
-              <span className="inter_medium">Actors: </span>
-              {movie.joinedActors &&
-                movie.joinedActors.slice(0, 4).map((actor, index) => {
-                  return (
-                    <span
-                      key={actor._id}
-                      className="person_name"
-                      onClick={() => handleNavigateToPerson(actor._id)}
-                    >
-                      {actor.name}
-                      {index !== 3 && ", "}
-                    </span>
-                  );
-                })}
-              {movie.joinedActors && (
-                <span className="links" onClick={goToMovieDetails}>
-                  {" "}
-                  and others ...
-                </span>
-              )}
-            </p>
+            {movie.joinedActors && movie.joinedActors.length !== 0 ? (
+              <p>
+                <span className="inter_medium">Actors: </span>
+                {movie.joinedActors &&
+                  movie.joinedActors.slice(0, 4).map((actor, index) => {
+                    return (
+                      <span
+                        key={actor._id}
+                        className="person_name"
+                        onClick={() => handleNavigateToPerson(actor._id)}
+                      >
+                        {actor.name}
+                        {index !== 3 && ", "}
+                      </span>
+                    );
+                  })}
+                {movie.joinedActors && (
+                  <span className="links" onClick={goToMovieDetails}>
+                    {" "}
+                    and others ...
+                  </span>
+                )}
+              </p>
+            ) : (
+              <p>
+                <span className="inter_medium">Actors: </span>
+                Unknown
+              </p>
+            )}
           </div>
 
           <p className="links" onClick={() => goToMovieDetails()}>
