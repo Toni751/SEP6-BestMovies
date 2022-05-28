@@ -29,4 +29,4 @@ jobs:
         run: npm run test
         working-directory: frontend
       - name: Deploy app
-        run: CI=false npx sst deploy --stage prod
+        run: CI=false npm run deploy-prod
