@@ -1,6 +1,4 @@
-// import FrontendStack from "./FrontendStack";
 import { MyStack } from "./MyStack";
-// import AuthStack from "./AuthStack";
 import { App } from "@serverless-stack/resources";
 
 export default async function main(app: App) {

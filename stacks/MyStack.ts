@@ -2,6 +2,7 @@ import {
   Api,
   Auth,
   ReactStaticSite,
+  Cron,
   StackContext,
 } from "@serverless-stack/resources";
 import * as iam from "aws-cdk-lib/aws-iam";
@@ -94,6 +95,19 @@ export function MyStack({ stack, app }: StackContext) {
       REACT_APP_USER_POOL_CLIENT_ID: auth.userPoolClientId,
     },
   });
+
+  const cron = new Cron(stack, "Cron", {
+    schedule: "rate(30 days)",
+    job: "cronjob/fetchMoviesPeople.main",
+  });
+
+  cron.attachPermissions([
+    new iam.PolicyStatement({
+      actions: ["ssm:GetParameter"],
+      effect: iam.Effect.ALLOW,
+      resources: [`arn:aws:ssm:*:${app.account}:parameter/*`],
+    }),
+  ]);
 
   // Show the endpoint in the output
   stack.addOutputs({
