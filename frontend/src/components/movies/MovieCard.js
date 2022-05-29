@@ -1,14 +1,14 @@
-import React, { useState, useContext } from "react";
-import white_like from "../images/white_like.png";
-import yellow_like from "../images/yellow_like.png";
-import white_star from "../images/white_star.png";
-import yellow_star from "../images/yellow_star.png";
-import default_movie_logo from "../images/default-movie-logo.png";
-import "../styles/MovieCard.css";
-import { AuthContext } from "../auth/AuthProvider";
+import React, { useContext } from "react";
+import white_like from "../../images/white_like.png";
+import yellow_like from "../../images/yellow_like.png";
+import white_star from "../../images/white_star.png";
+import yellow_star from "../../images/yellow_star.png";
+import default_movie_logo from "../../images/default-movie-logo.png";
+import "../../styles/movies/MovieCard.css";
+import { AuthContext } from "../../auth/AuthProvider";
 import { useNavigate } from "react-router-dom";
-import movieservice from "../services/movieservice";
-import userservice from "../services/userservice";
+import movieservice from "../../services/movieservice";
+import userservice from "../../services/userservice";
 
 const MovieCard = ({ movie, handleLike, handleStar }) => {
   const navigate = useNavigate();

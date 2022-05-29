@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { AuthContext } from "../auth/AuthProvider";
-import "../styles/MoviePage.css";
-import default_movie_logo from "../images/default-movie-logo.png";
-import white_like from "../images/white_like.png";
-import yellow_like from "../images/yellow_like.png";
-import white_star from "../images/white_star.png";
-import yellow_star from "../images/yellow_star.png";
-import movieservice from "../services/movieservice";
-import userservice from "../services/userservice";
+import { AuthContext } from "../../auth/AuthProvider";
+import "../../styles/movies/MoviePage.css";
+import default_movie_logo from "../../images/default-movie-logo.png";
+import white_like from "../../images/white_like.png";
+import yellow_like from "../../images/yellow_like.png";
+import white_star from "../../images/white_star.png";
+import yellow_star from "../../images/yellow_star.png";
+import movieservice from "../../services/movieservice";
+import userservice from "../../services/userservice";
 import MovieCommentCard from "./MovieCommentCard";
 
 const MoviePage = () => {

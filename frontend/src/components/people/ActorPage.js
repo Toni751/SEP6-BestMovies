@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import "../styles/ActorPage.css";
-import default_movie_logo from "../images/default-movie-logo.png";
+import "../../styles/people/ActorPage.css";
+import default_movie_logo from "../../images/default-movie-logo.png";
 import ActorBiography from "./ActorBiography";
-import peopleservice from "../services/peopleservice";
-import BarChart from "./BarChart";
+import peopleservice from "../../services/peopleservice";
+import BarChart from "../charts/BarChart";
 
 const ActorPage = () => {
   let { personId } = useParams();
@@ -125,7 +125,10 @@ const ActorPage = () => {
                       onClick={() => handleNavigateMovie(movie._id)}
                     >
                       {movie.title}
-                      {index !== person.actorMovies.length - 1 && ", "}
+                      {index !==
+                        person.actorMovies.concat(person.directorMovies)
+                          .length -
+                          1 && ", "}
                     </span>
                   );
                 })}

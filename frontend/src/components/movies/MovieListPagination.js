@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../styles/MovieListPagination.css";
+import "../../styles/movies/MovieListPagination.css";
 
 const MovieListPagination = ({ parentCallback, totalNumberOfPages }) => {
   const [currentIndex, setCurrentIndex] = useState(1);

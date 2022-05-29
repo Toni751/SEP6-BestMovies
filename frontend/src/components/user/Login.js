@@ -1,32 +1,35 @@
-import React, { useState, useContext, useEffect } from "react";
-import { AuthContext } from "../auth/AuthProvider";
-import "../styles/Signup.css";
-import popcorn from "../images/popcorn.png";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { AuthContext } from "../../auth/AuthProvider";
+import { useNavigate, useLocation } from "react-router";
+import "../../styles/user/Login.css";
+import popcorn from "../../images/popcorn.png";
 
-const Signup = () => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
+const Login = () => {
   const [password, setPassword] = useState("");
-  const [isSignedUp, setIsSignedUp] = useState(false);
-  const [confirmationCode, setConfirmationCode] = useState("");
+  const [userid, setUserid] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [confirmationError, setConfirmationError] = useState("");
+  const [isVerified, setIsVerified] = useState(true);
+  const [confirmationCode, setConfirmationCode] = useState("");
   const auth = useContext(AuthContext);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const findLoginRedirect = () => {
+    if (location.state && location.state.from) {
+      console.log("Redirecting", location.state.from);
+      return location.state.from;
+    }
+
+    return "/discover";
+  };
 
   const verifiyCredentials = () => {
-    const regEmail =
-      /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     if (password.length < 8) {
-      console.log("Ana");
       return "Password must contain more than 8 characters.";
     }
-    if (!regEmail.test(email)) {
-      return "Email is not valid.";
-    }
-    if (username.length === 0) {
-      return "Username is empty.";
+    if (userid.length === 0) {
+      return "Username/email is empty.";
     } else {
       return "";
     }
@@ -34,34 +37,42 @@ const Signup = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("Facem ceva aici???");
     const newErrorMessage = verifiyCredentials();
-    console.log("Error message", newErrorMessage);
+
     if (newErrorMessage === "") {
-      console.log("2", newErrorMessage);
-      const response = await auth.signUp(username, email, password);
-      if (response) {
-        console.log("User successfully signed up");
-        setIsSignedUp(true);
+      const response = await auth.login(userid, password);
+
+      if (response === "true") {
+        navigate(findLoginRedirect());
+      } else if (response === "User is not confirmed.") {
+        setIsVerified(false);
+        await auth.resendConfirmation(userid);
       } else {
-        setIsSignedUp(false);
-        console.log("User cannot be created");
-        setErrorMessage("User cannot be created");
+        clearFields();
+        setErrorMessage(response);
       }
     } else {
       setErrorMessage(newErrorMessage);
     }
   };
 
+  const clearFields = () => {
+    setUserid("");
+    setPassword("");
+  };
+
+  const goToSignUp = () => {
+    navigate("/signup");
+  };
+
   const handleConfirmationSubmit = async (event) => {
     event.preventDefault();
 
     const response = await auth.handleConfirmation(
-      username,
+      userid,
       password,
       confirmationCode
     );
-
     if (response === "true") {
       console.log("Confirmation successful");
       navigate("/discover");
@@ -71,13 +82,9 @@ const Signup = () => {
     }
   };
 
-  const goToLogin = () => {
-    navigate("/login");
-  };
-
   return (
     <div className="auth_div">
-      {isSignedUp ? (
+      {!isVerified ? (
         <form className="auth_form" onSubmit={handleConfirmationSubmit}>
           <img
             src={popcorn}
@@ -114,32 +121,19 @@ const Signup = () => {
             height="60px"
             className="logo"
           ></img>
-          <p className="sub_subheader neg_margin_text inter_bold">
-            Ready for a movie?
-          </p>
-          <p className="sub_subheader inter_bold">Create an account!</p>
+          <p className="sub_subheader inter_bold">Nice to see you back!</p>
           <div className="auth_form_groups">
-            <label>Username</label>
+            <label>Username or email</label>
             <input
               type="text"
               className="form-control"
               id="username"
-              placeholder="Username..."
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Username or email..."
+              value={userid}
+              onChange={(e) => setUserid(e.target.value)}
             ></input>
           </div>
-          <div className="auth_form_groups">
-            <label>Email</label>
-            <input
-              type="text"
-              className="form-control"
-              id="email"
-              placeholder="Email..."
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            ></input>
-          </div>
+
           <div className="auth_form_groups">
             <label>Password</label>
             <input
@@ -153,14 +147,14 @@ const Signup = () => {
           </div>
           <span className="auth_err_text">{errorMessage}</span>
           <button type="submit" className="signup_button">
-            Submit
+            Log in
           </button>
-          <p className="helper_text">Already have an account?</p>
+          <p className="helper_text">Don't have an account?</p>
           <p className="helper_text top_margin_text">
             Go to
-            <span className="links" onClick={() => goToLogin()}>
+            <span className="links" onClick={() => goToSignUp()}>
               {" "}
-              log in
+              sign up
             </span>
             .
           </p>
@@ -170,4 +164,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Login;

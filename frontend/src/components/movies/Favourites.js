@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
-import "../styles/Commons.css";
-import sparkles from "../images/sparkles.png";
+import sparkles from "../../images/sparkles.png";
 import MovieListPagination from "./MovieListPagination";
-import userservice from "../services/userservice";
-import { AuthContext } from "../auth/AuthProvider";
-import "../styles/Favourites.css";
+import userservice from "../../services/userservice";
+import { AuthContext } from "../../auth/AuthProvider";
+import "../../styles/movies/Favourites.css";
 import MovieList from "./MovieList";
-import PieChart from "./PieChart";
-import BarChart from "./BarChart";
+import PieChart from "../charts/PieChart";
+import BarChart from "../charts/BarChart";
 
 const Favourites = () => {
   const auth = useContext(AuthContext);

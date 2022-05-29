@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
-import { AuthContext } from "../auth/AuthProvider";
-import "../styles/SeeProfile.css";
+import { AuthContext } from "../../auth/AuthProvider";
+import "../../styles/user/SeeProfile.css";
 import { useNavigate } from "react-router-dom";
-import userservice from "../services/userservice";
+import userservice from "../../services/userservice";
 
 const SeeProfile = () => {
   const auth = useContext(AuthContext);

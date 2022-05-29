@@ -1,35 +1,32 @@
 import React, { useState, useContext } from "react";
-import { AuthContext } from "../auth/AuthProvider";
-import { useNavigate, useLocation } from "react-router";
-import "../styles/Login.css";
-import popcorn from "../images/popcorn.png";
+import { AuthContext } from "../../auth/AuthProvider";
+import "../../styles/user/Signup.css";
+import popcorn from "../../images/popcorn.png";
+import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const Signup = () => {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [userid, setUserid] = useState("");
+  const [isSignedUp, setIsSignedUp] = useState(false);
+  const [confirmationCode, setConfirmationCode] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [confirmationError, setConfirmationError] = useState("");
-  const [isVerified, setIsVerified] = useState(true);
-  const [confirmationCode, setConfirmationCode] = useState("");
   const auth = useContext(AuthContext);
   const navigate = useNavigate();
-  const location = useLocation();
-
-  const findLoginRedirect = () => {
-    if (location.state && location.state.from) {
-      console.log("Redirecting", location.state.from);
-      return location.state.from;
-    }
-
-    return "/discover";
-  };
 
   const verifiyCredentials = () => {
+    const regEmail =
+      /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     if (password.length < 8) {
+      console.log("Ana");
       return "Password must contain more than 8 characters.";
     }
-    if (userid.length === 0) {
-      return "Username/email is empty.";
+    if (!regEmail.test(email)) {
+      return "Email is not valid.";
+    }
+    if (username.length === 0) {
+      return "Username is empty.";
     } else {
       return "";
     }
@@ -38,41 +35,31 @@ const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const newErrorMessage = verifiyCredentials();
-
+    console.log("Error message", newErrorMessage);
     if (newErrorMessage === "") {
-      const response = await auth.login(userid, password);
-
-      if (response === "true") {
-        navigate(findLoginRedirect());
-      } else if (response === "User is not confirmed.") {
-        setIsVerified(false);
-        await auth.resendConfirmation(userid);
+      const response = await auth.signUp(username, email, password);
+      if (response) {
+        console.log("User successfully signed up");
+        setIsSignedUp(true);
       } else {
-        clearFields();
-        setErrorMessage(response);
+        setIsSignedUp(false);
+        console.log("User cannot be created");
+        setErrorMessage("User cannot be created");
       }
     } else {
       setErrorMessage(newErrorMessage);
     }
   };
 
-  const clearFields = () => {
-    setUserid("");
-    setPassword("");
-  };
-
-  const goToSignUp = () => {
-    navigate("/signup");
-  };
-
   const handleConfirmationSubmit = async (event) => {
     event.preventDefault();
 
     const response = await auth.handleConfirmation(
-      userid,
+      username,
       password,
       confirmationCode
     );
+
     if (response === "true") {
       console.log("Confirmation successful");
       navigate("/discover");
@@ -82,9 +69,13 @@ const Login = () => {
     }
   };
 
+  const goToLogin = () => {
+    navigate("/login");
+  };
+
   return (
     <div className="auth_div">
-      {!isVerified ? (
+      {isSignedUp ? (
         <form className="auth_form" onSubmit={handleConfirmationSubmit}>
           <img
             src={popcorn}
@@ -104,7 +95,7 @@ const Login = () => {
               onChange={(e) => setConfirmationCode(e.target.value)}
             />
           </div>
-          <span className="auth_err_text">{confirmationCode}</span>
+          <span className="auth_err_text">{confirmationError}</span>
           <button type="submit" className="signup_button">
             Submit
           </button>
@@ -121,19 +112,32 @@ const Login = () => {
             height="60px"
             className="logo"
           ></img>
-          <p className="sub_subheader inter_bold">Nice to see you back!</p>
+          <p className="sub_subheader neg_margin_text inter_bold">
+            Ready for a movie?
+          </p>
+          <p className="sub_subheader inter_bold">Create an account!</p>
           <div className="auth_form_groups">
-            <label>Username or email</label>
+            <label>Username</label>
             <input
               type="text"
               className="form-control"
               id="username"
-              placeholder="Username or email..."
-              value={userid}
-              onChange={(e) => setUserid(e.target.value)}
+              placeholder="Username..."
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             ></input>
           </div>
-
+          <div className="auth_form_groups">
+            <label>Email</label>
+            <input
+              type="text"
+              className="form-control"
+              id="email"
+              placeholder="Email..."
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            ></input>
+          </div>
           <div className="auth_form_groups">
             <label>Password</label>
             <input
@@ -147,14 +151,14 @@ const Login = () => {
           </div>
           <span className="auth_err_text">{errorMessage}</span>
           <button type="submit" className="signup_button">
-            Log in
+            Submit
           </button>
-          <p className="helper_text">Don't have an account?</p>
+          <p className="helper_text">Already have an account?</p>
           <p className="helper_text top_margin_text">
             Go to
-            <span className="links" onClick={() => goToSignUp()}>
+            <span className="links" onClick={() => goToLogin()}>
               {" "}
-              sign up
+              log in
             </span>
             .
           </p>
@@ -164,4 +168,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;

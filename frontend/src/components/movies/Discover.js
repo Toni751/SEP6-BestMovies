@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
-import { AuthContext } from "../auth/AuthProvider";
-import movieservice from "../services/movieservice";
-import "../styles/Discover.css";
+import { AuthContext } from "../../auth/AuthProvider";
+import movieservice from "../../services/movieservice";
+import "../../styles/movies/Discover.css";
 import MovieListPagination from "./MovieListPagination";
 import Multiselect from "multiselect-react-dropdown";
-import allGenres from "../utils/genres";
+import allGenres from "../../utils/genres";
 import MovieList from "./MovieList";
 import { useNavigate } from "react-router-dom";
 
