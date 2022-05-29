@@ -9,7 +9,6 @@ export async function main(event) {
   const filter = event.queryStringParameters.filter;
   const genresRaw = event.queryStringParameters.genres;
 
-  // console.log("Genres", genresRaw, page, filter, userId);
   const filterObject =
     filter === "oldest" ? { release_date: 1 } : { release_date: -1 };
 
@@ -20,7 +19,7 @@ export async function main(event) {
   if (!isGenresEmpty) {
     genres = genresRaw.split(",");
   }
-  console.log("Genres", genres, genresRaw);
+
   const genresMatchObject = isGenresEmpty
     ? { release_date: { $lte: currentYear } }
     : {
