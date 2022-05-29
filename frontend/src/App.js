@@ -2,19 +2,19 @@ import React from "react";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./auth/AuthProvider";
-import Login from "./components/Login";
-import Signup from "./components/Signup";
+import Login from "./components/user/Login";
+import Signup from "./components/user/Signup";
 import Homepage from "./components/Homepage";
-import Discover from "./components/Discover";
-import SeeProfile from "./components/SeeProfile";
-import Favourites from "./components/Favourites";
+import Discover from "./components/movies/Discover";
+import SeeProfile from "./components/user/SeeProfile";
+import Favourites from "./components/movies/Favourites";
 import Navbar from "./components/Navbar";
 import "./styles/Commons.css";
 import RequireAuth from "./auth/RequireAuth";
-import Trending from "./components/Trending";
-import MoviePage from "./components/MoviePage";
-import ActorPage from "./components/ActorPage";
-import ChartsPage from "./components/ChartsPage";
+import Trending from "./components/movies/Trending";
+import MoviePage from "./components/movies/MoviePage";
+import ActorPage from "./components/people/ActorPage";
+import ChartsPage from "./components/movies/ChartsPage";
 
 function App() {
   return (

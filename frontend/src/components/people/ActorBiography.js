@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/ActorBiography.css";
+import "../../styles/people/ActorBiography.css";
 
 const ActorBiography = ({ biography, parentCallback }) => {
   const onClose = () => {

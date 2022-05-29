@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import nerd from "../images/nerd.png";
-import BarChart from "./BarChart";
-import LineChart from "./LineChart";
-import peopleservice from "../services/peopleservice";
-import movieservice from "../services/movieservice";
-import "../styles/ChartsPage.css";
+import nerd from "../../images/nerd.png";
+import BarChart from "../charts/BarChart";
+import LineChart from "../charts/LineChart";
+import peopleservice from "../../services/peopleservice";
+import movieservice from "../../services/movieservice";
+import "../../styles/movies/ChartsPage.css";
 
 const ChartsPage = () => {
   const [actorsChartData, setActorsChartData] = useState({});
@@ -20,7 +20,6 @@ const ChartsPage = () => {
     movieservice
       .getMoviesYearAverage()
       .then((response) => {
-        console.log("years console log", response.data);
         setYearsChart(response.data);
       })
       .catch((err) => console.log(err));

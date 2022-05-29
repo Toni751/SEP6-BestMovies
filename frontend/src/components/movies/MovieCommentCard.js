@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
-import { AuthContext } from "../auth/AuthProvider";
-import trash from "../images/trash.png";
-import movieservice from "../services/movieservice";
+import { AuthContext } from "../../auth/AuthProvider";
+import trash from "../../images/trash.png";
+import movieservice from "../../services/movieservice";
 
 const MovieCommentCard = ({
   _id,

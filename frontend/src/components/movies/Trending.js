@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
-import { AuthContext } from "../auth/AuthProvider";
-import movieservice from "../services/movieservice";
-import "../styles/Discover.css";
+import { AuthContext } from "../../auth/AuthProvider";
+import movieservice from "../../services/movieservice";
+import "../../styles/movies/Discover.css";
 import MovieListPagination from "./MovieListPagination";
-import fire from "../images/fire.png";
+import fire from "../../images/fire.png";
 import MovieList from "./MovieList";
 import { useNavigate } from "react-router-dom";
 
