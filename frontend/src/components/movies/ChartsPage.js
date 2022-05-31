@@ -85,7 +85,7 @@ const ChartsPage = () => {
       </div>
       {Object.keys(actorsChartData).length !== 0 &&
         Object.keys(directorsChartData).length !== 0 &&
-        Object.keys(actorsChartData).length !== 0 && (
+        Object.keys(yearsChartData).length !== 0 && (
           <div className="charts_page_div">
             <div className="charts_div">
               <div className="single_chart_div">

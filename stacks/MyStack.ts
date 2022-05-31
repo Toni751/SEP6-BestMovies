@@ -57,7 +57,14 @@ export function MyStack({ stack, app }: StackContext) {
         function: "people/getPersonMovies.main",
         authorizer: "none",
       },
-
+      "GET /people/highest_rated": {
+        function: "people/getHighestRatedPeople.main",
+        authorizer: "none",
+      },
+      "GET /movies/years_average": {
+        function: "movies/getMoviesYearAverage.main",
+        authorizer: "none",
+      },
       "GET /toplists/{user_id}": "users/getUserToplist.main",
       "GET /movies/trending": "movies/getTrendingMovies.main",
       "POST /movies/likes": "movies/addMovieLike.main",
@@ -65,10 +72,8 @@ export function MyStack({ stack, app }: StackContext) {
       "POST /toplists": "users/addMovieToToplist.main",
       "DELETE /users/{user_id}": "users/deleteUser.main",
       "DELETE /movies/comments/{comment_id}": "movies/deleteComment.main",
-      "GET /people/highest_rated": "people/getHighestRatedPeople.main",
       "GET /toplists/{user_id}/genres": "users/getUserGenres.main",
       "GET /toplists/{user_id}/years": "users/getUserYears.main",
-      "GET /movies/years_average": "movies/getMoviesYearAverage.main",
     },
   });
 
